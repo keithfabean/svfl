@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--  Include the Common Head file from the Partials Folder ---------  -->
+    <% include ../partials/head %>
+    <!--  Figure out how to move the css stuff into this file
+      include ../public/css/svfl.css
+    -->
+
+<!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+<style>
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #333;
+}
+
+li {
+float: left;
+}
+
+li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+a:hover:not(.active) {
+background-color: #111;
+}
+
+.active {
+background-color:#4CAF50;
+}
+</style>
+<!-- End of STYLE for Navigation Bar  ----------------------------- -->
+</head>
+
+<body>
+
+  <div>
+    <center>
+      <h1>SVFL Standings Page</h1
+    </center>
+  </div>
+
+<header>
+  <!-- Include the Navagation bar on the page  ------------------------- -->
+  <% include ../partials/header %>
+</header>
+
+<div class="ownerstandings">
+
+<table rules=groups border=5>
+<thead border=2>
+<tr>
+    <th align="center">Owner</th>
+    <th>Last Week Totals</th>
+    <th>This Week Totals</th>
+    <th>Grand Totals</th>
+    <th>Weekly Avg.</th>
+    <th>Current Winnings</th>
+    <th>Points from Playoffs</th>
+</tr>
+</thead>
+<tbody border=2>
+  <%
+console.log("*** standings.ejs - result length: " + standings.length);
+for (var i=0; i < standings.length; i++) { %>
+    <div class="col-xs-12">
+<tr>
+        <td>
+        <%= standings[i].get('firstName') + " " + standings[i].get('lastName')%>
+        </td>
+<td>
+<%= standings[i].get('lastWeekTotals')%>
+</td>
+<td>
+<%= standings[i].get('thisWeekTotals')%>
+</td>
+<td>
+<%= standings[i].get('grandTotals')%>
+</td>
+<td>
+<%= standings[i].get('weeklyAverage')%>
+</td>
+<td>
+<%= standings[i].get('currentWinnings')%>
+</td>
+<td>
+<%= standings[i].get('pointsFromPlayoffs')%>
+</td>
+</tr>
+<%
+}
+%>
+</tbody>
+</table>
+</div>
+
+<!--  Include the Common Footer from the Partials Folder ---------  -->
+<footer>
+  <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>

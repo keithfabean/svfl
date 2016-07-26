@@ -1,0 +1,8 @@
+# ignore packages installed by npm
+node_modules
+npm-debug.log
+
+# Ignore Local Development files
+*.dev
+*.env
+.DS_Store

@@ -1,0 +1,32 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red65\green130\blue95;\red30\green90\blue132;\red164\green0\blue164;
+\red0\green0\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs22 \cf2 ------------------------------------------------------------------\cf0 \
+\cf2 --  TABLE SVFL_Owner\cf0 \
+\cf2 ------------------------------------------------------------------\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 CREATE\cf0  \cf3 TABLE\cf0  "SVFL_Owner"\
+(\
+   "objectId"             \cf4 SERIAL\cf0  \cf3 PRIMARY\cf0  \cf3 KEY\cf0 ,\
+   "firstName"            \cf4 CHARACTER VARYING\cf0  (\cf5 25\cf0 ),\
+   "lastName"             \cf4 CHARACTER VARYING\cf0  (\cf5 25\cf0 ),\
+   "primaryEmail"         \cf4 CHARACTER VARYING\cf0  (\cf5 35\cf0 ),\
+   "secondaryEmail"       \cf4 CHARACTER VARYING\cf0  (\cf5 35\cf0 ),\
+   "homePhone"            \cf4 NUMERIC\cf0  (\cf5 10\cf0 , \cf5 0\cf0 ) \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "workPhone"            \cf4 NUMERIC\cf0  (\cf5 10\cf0 , \cf5 0\cf0 ) \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "mobilePhone"          \cf4 NUMERIC\cf0  (\cf5 10\cf0 , \cf5 0\cf0 ) \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "thisWeekTotals"       \cf4 INTEGER\cf0  \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "lastWeekTotals"       \cf4 INTEGER\cf0  \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "weeklyAverage"        \cf4 NUMERIC\cf0  (\cf5 4\cf0 , \cf5 2\cf0 ) \cf3 DEFAULT\cf0  \cf5 0.00\cf0 ,\
+   "grandTotals"          \cf4 INTEGER\cf0  \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "pointsFromPlayoffs"   \cf4 INTEGER\cf0  \cf3 DEFAULT\cf0  \cf5 0\cf0 ,\
+   "currentWinnings"      \cf4 NUMERIC\cf0  (\cf5 4\cf0 , \cf5 2\cf0 ) \cf3 DEFAULT\cf0  \cf5 0.00\cf0 ,\
+   "createdAt"            \cf4 timestamp\cf0  (\cf5 5\cf0 ) \cf3 WITHOUT\cf0  \cf3 TIME\cf0  \cf3 ZONE\cf0 ,\
+   "updatedAt"            \cf4 timestamp\cf0  (\cf5 5\cf0 ) \cf3 WITHOUT\cf0  \cf3 TIME\cf0  \cf3 ZONE\cf0 \
+);}

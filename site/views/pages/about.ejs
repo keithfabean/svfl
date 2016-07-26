@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Start of HEAD  ---------------------------------------------------- -->
+<head>
+  <!--  Include the Common Head file from the Partials Folder ---------  -->
+  <% include ../partials/head %>
+  <!--  Figure out how to move the css stuff into this file
+     include ../public/css/svfl.css
+  -->
+
+    <!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+    <style>
+      ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      }
+
+      li {
+      float: left;
+      }
+
+      li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      }
+
+      a:hover:not(.active) {
+      background-color: #111;
+      }
+
+      .active {
+      background-color:#4CAF50;
+      }
+    </style>
+    <!-- End of STYLE for Navigation Bar  ----------------------------- -->
+
+</head>
+<!-- End of HEAD  ---------------------------------------------------- -->
+
+<!-- Start of Body  ---------------------------------------------------- -->
+<body>
+  <div>
+    <center>
+      <h1>SVFL About Page</h1
+    </center>
+  </div>
+
+  <header>
+    <!-- Include the Navagation bar on the page  ------------------------- -->
+    <% include ../partials/header %>
+  </header>
+
+  <!--  Include the Common Footer from the Partials Folder ---------  -->
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+<!-- End of Body  ---------------------------------------------------- -->
+
+</html>

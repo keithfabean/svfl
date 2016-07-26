@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SVFL Player Moves</title>
+
+<!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+<style>
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #333;
+}
+
+li {
+float: left;
+}
+
+li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+a:hover:not(.active) {
+background-color: #111;
+}
+
+.active {
+background-color:#4CAF50;
+}
+</style>
+<!-- End of STYLE for Navigation Bar  ----------------------------- -->
+
+<center>
+<h1>SVFL Player Moves</h1
+</center>
+
+<!--   NAVIGATION BAR  -----------------------------------------  -->
+<ul>
+<li><a class="active" href="/home">Home</a></li>
+<li><a href="/standings">Standings</a></li>
+<li><a href="/rosters">Rosters</a></li>
+<li><a href="/playerlist">Player List</a></li>
+<li><a href="/teamlist">Teams</a></li>
+<li><a href="/draft">Draft</a></li>
+<li><a href="/moves">Moves</a></li>
+<li><a href="/contact">Contact</a></li>
+<li><a href="/about">About</a></li>
+</ul>
+<!--   NAVIGATION BAR  -----------------------------------------  -->
+    </head>
+
+    <body>
+
+<div class="ownermoves">
+<table border=2>
+<thead>
+<tr>
+    <th align="center" span="4">
+        <%= rosters[0].get('SVFLOwnerId').get('firstName') + " " + rosters[0].get('SVFLOwnerId').get('lastName')%>
+    </th>
+
+</tr>
+<tr>
+    <th>Player</th>
+    <th>Team</th>
+    <th>Position</th>
+    <th>Drop</th>
+</tr>
+</thead>
+<tbody>
+<form
+  <%
+console.log("*** moves.ejs - result length: " + rosters.length);
+for (var i=0; i < rosters.length; i++) { %>
+    <div class="col-xs-12">
+<tr>
+<td>
+<%= rosters[i].get('NFLPlayerId').get('fullName')%>
+</td>
+<td>
+<%= rosters[i].get('NFLPlayerId').get('abvTeam')%>
+</td>
+<td>
+<%= rosters[i].get('NFLPlayerId').get('abvPosition')%>
+</td>
+<td>
+        <input type="radio" name="dropplayer" value="
+            <%= rosters[i].get('NFLPlayerId').get('objectId')%>
+        ">
+</td>
+</tr>
+<%
+}
+%>
+</form>
+</tbody>
+</table>
+</div>
+
+</html>

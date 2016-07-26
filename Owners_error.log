@@ -1,0 +1,5 @@
+/*
+2016-07-20 12:21:30.110 PDT
+Problem occurred while converting: 2016-07-20 12:20:01'
+Object of type 'java.lang.String' should be of type 'java.sql.Timestamp'/n*/
+

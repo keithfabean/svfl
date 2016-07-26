@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Start of HEAD  ---------------------------------------------------- -->
+    <head>
+        <meta charset="UTF-8">
+        <title>SVFL Draft</title>
+
+<!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+<style>
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #333;
+}
+
+li {
+float: left;
+}
+
+li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+a:hover:not(.active) {
+background-color: #111;
+}
+
+.active {
+background-color:#4CAF50;
+}
+</style>
+<!-- End of STYLE for Navigation Bar  ----------------------------- -->
+    <center>
+        <h1>SVFL Draft</h1
+    </center>
+<!--   NAVIGATION BAR  -----------------------------------------  -->
+<ul>
+<li><a class="active" href="/home">Home</a></li>
+<li><a href="/standings">Standings</a></li>
+<li><a href="/rosters">Rosters</a></li>
+<li><a href="/playerlist">Player List</a></li>
+<li><a href="/teamlist">Teams</a></li>
+<li><a href="/draft">Draft</a></li>
+<li><a href="/moves">Moves</a></li>
+<li><a href="/contact">Contact</a></li>
+<li><a href="/about">About</a></li>
+</ul>
+<!--   END NAVIGATION BAR  -----------------------------------------  -->
+
+</head>
+<!-- End of HEAD  ---------------------------------------------------- -->
+
+<!-- Start of Body  ---------------------------------------------------- -->
+<body>
+
+<!-- Wrap the entire set of tables in a form  -------------------------- -->
+<form method="post" action="/draft">
+<input type="submit">
+
+<!-- -------Start of the Table for the Owner Roster & Player List --------------- -->
+<table border=2 cellpadding"100" cellspacing"500">
+<tr>
+    <!-- -------- Start of the Table Cell for Owners List --------------------- -->
+    <td valign="top">
+        <div id="owner" class="owner">
+            <table border=2 sortable>
+            <thead>
+                <tr>
+                    <th>Owner</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+<!--                <form	-->
+                  <%
+                console.log("*** draft.ejs - OWNER length: " + owners.length);
+                for (var i=0; i < owners.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= owners[i].get('firstName') + " " + owners[i].get('lastName')%>
+                        </td>
+                        <td>
+                            <input type="radio" name="ownerId" value="<%= owners[i].id%>">
+                        </td>
+                    </tr>
+                <%
+                }   // Close the for loop
+                %>
+<!--                </form>	-->
+            </tbody>
+            </table>
+
+        </div>
+    </td>
+    <!-- -------End of the Table Cell for the Owner List --------------- -->
+
+    <!-- -------- Start of the Table Cell for Owners Roster List of Players -------------- -->
+    <td valign="top">
+        <div id="roster" class="ownerroster">
+            <table border=2 sortable>
+            <thead>
+                <tr>
+                    <th align="center" span="4">
+                    <%= roster[0].get('SVFLOwnerId').get('firstName') + " " + roster[0].get('SVFLOwnerId').get('lastName')%>
+                    </th>
+
+                </tr>
+                <tr>
+                    <th>Player</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Drop</th>
+                </tr>
+            </thead>
+            <tbody>
+<!--                <form	-->
+                  <%
+                console.log("*** draft.ejs - ROSTER length: " + roster.length);
+                for (var i=0; i < roster.length; i++) { %>
+                    <tr>
+                        <td>
+							<%= roster[i].get('NFLPlayerId').get('fullName')%>
+                        </td>
+                        <td>
+							<%= roster[i].get('NFLPlayerId').get('abvTeam')%>
+                        </td>
+                        <td>
+							<%= roster[i].get('NFLPlayerId').get('abvPosition')%>
+                        </td>
+                        <td>
+							<input type="radio" name="dropplayerId" value="<%= roster[i].get('NFLPlayerId').id%>">
+                        </td>
+                    </tr>
+                <%
+                }   // Close the for loop
+                %>
+<!--                </form>		-->
+            </tbody>
+            </table>
+
+        </div>
+
+    </td>
+    <!-- -------End of the Table Cell for the Owner Roster --------------- -->
+
+<!-- -------Start of the Table Cell for the Player List --------------- -->
+<td>
+
+<!-- ---------- Start of the List of Players to be added to an Owner Roster ---------- -->
+
+<div id="playerlist" "class="playerlist">
+
+<!--
+<form method="post" action="/draft">
+    <select name="positionname">
+        <option selected value="Selection">--Make a Selection--</option>
+        <option value="Defence">Defence</option>
+        <option value="Kicker">Kicker</option>
+        <option value="Quarterback">Quarterback</option>
+        <option value="RunningBack">Runningback</option>
+        <option value="TightEnd">Tight End</option>
+        <option value="WideReceiver">Wide Receiver</option>
+    </select>
+    <input type="submit">
+</form>
+-->
+
+<table border=2>
+	<thead>
+	<tr>
+		<th>Player</th>
+		<th>Team</th>
+		<th>Position</th>
+		<th>Add</th>
+	</tr>
+	</thead>
+	<tbody>
+
+	<%
+	console.log("*** draft.ejs - PLAYER length: " + players.length);
+	for (var i=0; i < players.length; i++) {
+    %>
+
+	<tr>
+		<td>
+			<%= players[i].get('fullName')%>
+		</td>
+		<td>
+			<%= players[i].get('teamName')%>
+		</td>
+		<td>
+			<%= players[i].get('abvPosition')%>
+		</td>
+		<td>
+			<input type="radio" name="addplayerId" value="<%= players[i].id%>">
+		</td>
+	</tr>
+	<%
+	}   //close the for loop
+	%>
+	</tbody>
+</table>
+</div>
+
+</td>
+<!-- -------End of the Table Cell for the Player List --------------- -->
+</tr>
+<!-- -------End of the Table Row for the Owner, Roster & Player List --------------- -->
+</table>
+</form>  <!-- This closes the open Form tag.
+<!-- -------End of the Table for the Owner, Roster & Player List --------------- -->
+
+</html>
