@@ -1,19 +1,32 @@
 {
   "name": "svfl",
+  "author": "Keith Fabean",
   "version": "1.0.0",
-  "description": "",
+  "description": "Silicon Valley Fantasy League Node.js Web Application",
+  "engines": {
+    "node": "4.4.7"
+  },
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-    "start": "node app.js"
   },
-  "keywords": [],
-  "author": "Keith Fabean",
-  "license": "ISC",
   "dependencies": {
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "mongodb": "^2.1.18",
     "pg": "^6.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/svfl.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "ejs",
+    "heroku",
+    "postgres"
+  ],
+  "license": "ISC"
 }
