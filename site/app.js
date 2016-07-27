@@ -11,8 +11,8 @@
 
 // Global app configuration section
 app.set('port', process.env.PORT || 3000);
-//app.set('views', 'site/views');  // Specify the folder to find templates
-app.set('views', 'views');  // Specify the folder to find templates
+app.set('views', 'site/views');  // Specify the folder to find templates
+//app.set('views', 'views');  // Specify the folder to find templates
 app.set('view engine', 'ejs');    // Set the template engine
 
 // app.use(parseExpressHttpsRedirect());  // Require user to be on HTTPS.
