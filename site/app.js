@@ -2,16 +2,21 @@
 // This module is the main site routing control server.
 
 // These two lines are required to initialize Express in Cloud Code.
- express = require('express');
- app = express();
+express = require('express');
+app = express();
 
- // include the Main code file
- var main = require('./main.js')
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
+var _ = require('underscore');
+
+// include the Main code file
+var main = require('./main.js')
 
 
 // Global app configuration section
 app.set('port', process.env.PORT || 3000);
-app.set('views', 'site/views');  // Specify the folder to find templates
+app.set('views', __dirname + '/views');  // Specify the folder to find templates
 //app.set('views', 'views');  // Specify the folder to find templates
 app.set('view engine', 'ejs');    // Set the template engine
 
@@ -60,65 +65,63 @@ app.get('/home', function(req, res) {
 // This is an example of hooking up a request handler with a specific request
 // path and HTTP verb using the Express routing API.
 app.get('/standings', function(req, res) {
-	console.log("*** app.get/standings 001 - ENTRY-POINT");
-//	console.log("*** app.get/standings 002 - Request.body.username: " + req.body.username);
+    console.log("*** app.get/standings 001 - ENTRY-POINT");
+    //	console.log("*** app.get/standings 002 - Request.body.username: " + req.body.username);
 
-// //-------------------------------------------------------------
-// //require/import the mongodb native drivers.
-// var mongodb = require('mongodb');
-//
-// //We need to work with "MongoClient" interface in order to connect to a mongodb server.
-// var MongoClient = mongodb.MongoClient;
-//
-// // Connection URL. This is where your mongodb server is running.
-// //         mongodb://<dbuser>:<dbpassword>@ds019063.mlab.com:19063/svfl
-// var url = 'mongodb://svflaccess:svfl@ds019063.mlab.com:19063/svfl';
-//
-// // Use connect method to connect to the Server
-// MongoClient.connect(url, function (err, db) {
-//   if (err) {
-//     console.log('Unable to connect to the mongoDB server. Error:', err);
-//   } else {
-//     //HURRAY!! We are connected. :)
-//     console.log('Connection established to', url);
-//
-//     // do some work here with the database.
-//     var collection = db.collection('SVFLOwner');
-//
-//     // Insert some users
-//     collection.find().sort({grandTotals: -1}).toArray(function (err, owners) {
-//       if (err) {
-//         console.log(err);
-//       } else if (owners.length) {
-//         console.log('Found:', owners);
-//         	res.render('pages/standings', { standings: owners, titleText: "SVFL Standings"})
-//       } else {
-//         console.log('No document(s) found with defined "find" criteria!');
-//       }
-//     });
-//
-//     //Close connection
-//     //db.close();
-//   }
-// });
-//-------------------------------------------
+    console.log("*** app.get/standings 002 - GETSTANDINGS - BEFORE-CALL");
+    main.getStandings(req, res, function(owners) {
+        console.log("*** app.get/standings 003 - RUN-GETSTANDINGS - SUCCESS ENTRY-POINT");
+        console.log("*** app.get/standings 003.1 - getStandings Function Results: " + owners.rows);
+        console.log("*** app.get/standings 003.2 - getStandings Function Results: " + owners.rows[0].firstName);
 
-  console.log("*** app.get/standings 002 - GETSTANDINGS - BEFORE-CALL");
-	main.getStandings(req, res, function(owners) {
-		console.log("*** app.get/standings 003 - RUN-GETSTANDINGS - SUCCESS ENTRY-POINT");
-		console.log("*** app.get/standings 003.1 - getStandings Function Results: " + owners.rows);
-    console.log("*** app.get/standings 003.2 - getStandings Function Results: " + owners.rows[0].firstName);
+        res.render('pages/standings', { standings: owners, titleText: "SVFL Standings"})
 
-		res.render('pages/standings', { standings: owners, titleText: "SVFL Standings"})
-
-		console.log("*** app.get/standings 004 - RUN-GETSTANDINGS - SUCCESS EXIT-POINT");
-	},function(error) {
-    console.log("*** app.get/standings 005 - RUN-GETSTANDINGS - ERROR EXIT-POINT");
-		 console.log(error);
-	});	//end getStandings
+        console.log("*** app.get/standings 004 - RUN-GETSTANDINGS - SUCCESS EXIT-POINT");
+    },function(error) {
+        console.log("*** app.get/standings 005 - RUN-GETSTANDINGS - ERROR EXIT-POINT");
+        console.log(error);
+    });	//end getStandings
 
     console.log("*** app.get/standings 010 - EXIT-POINT");
 }); //end /standings
+
+//----------------------------------------------------------------------------------------------
+
+app.get('/users', function(req, res){
+  // //Make sure only valid fields are in the body
+  // var body = _.pick(req.body, 'userId', 'password');
+  //
+  main.getUsers(req, res, function(users) {
+      console.log("*** app.get/users 003 - RUN-GETUSERS - SUCCESS ENTRY-POINT");
+      console.log("*** app.get/users 003.1 - getUsers Function Results: " + users.rows);
+
+      res.status(200).json(users);
+//      res.render('pages/standings', { standings: owners, titleText: "SVFL Standings"})
+
+      console.log("*** app.get/users 004 - RUN-GETUSERS - SUCCESS EXIT-POINT");
+  },function(error) {
+      console.log("*** app.get/users 005 - RUN-GETUSERS - ERROR EXIT-POINT");
+      console.log(error);
+  });	//end GETUSERS
+
+});
+
+//----------------------------------------------------------------------------------------------
+
+app.post('/user', function(req, res){
+  // //Make sure only valid fields are in the body
+  // var body = _.pick(req.body, 'userId', 'password');
+  //
+  // db.user.create(body).then(function(user){
+  //     res.status(200).json(user.toPublicJSON());
+  // }, function(err){
+  //   console.log(body);
+  //   console.log(err);
+  //   res.status(400).json(err);
+  // });
+
+});
+
 
 //----------------------------------------------------------------------------------------------
 

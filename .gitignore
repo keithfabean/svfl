@@ -5,4 +5,7 @@ npm-debug.log
 # Ignore Local Development files
 *.dev
 *.env
+*.txt
+*.rtf
+*.sql
 .DS_Store
