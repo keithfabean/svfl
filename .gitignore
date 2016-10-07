@@ -8,4 +8,5 @@ npm-debug.log
 *.txt
 *.rtf
 *.sql
+*.csv
 .DS_Store

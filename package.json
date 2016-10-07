@@ -12,10 +12,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "crypto-js": "^3.1.6",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
-    "mongodb": "^2.1.18",
+    "jsonwebtoken": "^7.1.9",
     "pg": "^6.0.2",
     "underscore": "^1.8.3"
   },
