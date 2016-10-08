@@ -13,8 +13,11 @@ var exports = module.exports = {};
 
 exports.requireAuthentication = function(req, res, next){
             console.log('*** Middleware.js *** - 1');
-            var token = req.get('Auth') || '';
+            console.log(JSON.stringify(req.headers));
+            //var token = req.get('Auth') || '';
+            var token = req.header('Auth') || '*** WHY IS THE Auth HEADER NOT HERE? ***';
             var tokenHash = cryptojs.MD5(token).toString();
+
             console.log('*** middleware.requireAuthentication - token: ' + token);
             console.log('*** middleware.requireAuthentication - tokenHash: ' + tokenHash);
 
@@ -37,9 +40,8 @@ exports.requireAuthentication = function(req, res, next){
                 next();
             }).catch(function(){
                 console.log('*** middleware.requireAuthentication - CATCH ERROR:');
-                req.session.error = 'Please sign in!';
+                //req.session.error = 'Please sign in!';
                 res.redirect('/signin');
-                //console.log('*** middleware.requireAuthentication - CATCH ERROR:');
                 //res.status(401).send();
             });
 };

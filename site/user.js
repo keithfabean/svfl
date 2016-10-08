@@ -59,12 +59,15 @@ exports.generateToken = function(type, user){
         return undefined;
     }
     try {
-        console.log("*** user.generateToken 003 - generateToken - JSON stringify");
         var stringData = JSON.stringify({id: user.rows[0].id, type: type});
-        console.log("*** user.generateToken 004 - generateToken - encrypt data");
         var encryptedData = cryptojs.AES.encrypt(stringData, 'abc123!@#').toString();
         // jwt.sign takes the data to encrypt and a password used to encrypt the data
         var token = jwt.sign({token: encryptedData}, 'qwerty098');
+
+        console.log('**** generateToken **** - stringData: ' + stringData);
+        console.log('**** generateToken **** - encryptedData: ' + encryptedData);
+        console.log('**** generateToken **** - token: ' + token);
+
         return token;
     } catch(err){
         console.log("*** user.generateToken 009 - generateToken - catch error");
@@ -85,6 +88,8 @@ exports.createToken = function(token){
         // }
 
         var hash = cryptojs.MD5(token).toString();
+        console.log('**** token.js **** - token value: ' + token);
+        console.log('**** token.js **** - token hash: ' + hash);
 
 //INSERT INTO tokens VALUES (DEFAULT, '123abc', '09/26/2016 12:07:48 PDT', '09/26/2016 12:07:48 PDT')
 
@@ -133,6 +138,10 @@ exports.findByToken = function(token){
             var decodedJWT = jwt.verify(token, 'qwerty098');
             var bytes = cryptojs.AES.decrypt(decodedJWT.token, 'abc123!@#');
             var tokenData = JSON.parse(bytes.toString(cryptojs.enc.Utf8));
+
+            console.log('**** findByToken **** - token: ' + token);
+            console.log('**** findByToken **** - tokenData: ');
+            console.log(tokenData);
 
             console.log("*** user.findByToken 001.1 - exec query");
 

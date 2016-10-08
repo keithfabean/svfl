@@ -193,28 +193,29 @@ app.post('/signin', function(req, res){
         console.log(token);
 
         userInstance = userResult;
+        console.log('**** app.post user/login **** - userInstance: ');
+        console.log(userInstance);
 
         return user.createToken(token);
 
     }).then(function(tokenInstance){
-        console.log("*** app.post/user/login 008 - CREATETOKEN - USER: ");
-        console.log(userInstance.rows[0].email);
-        // console.log("*** app.post/user/login 009 - CREATETOKEN - TOKEN: ");
-        // console.log(token);
-        // console.log("*** app.post/user/login 010 - CREATETOKEN - TOKENINSTANCE: ");
-        // console.log(tokenInstance);
-        console.log("*** app.post/user/login 011 - CREATETOKEN - TOKENHASH: ");
+        console.log("*** app.post/user/login 008 - USER: ");
+        console.log(userInstance.rows[0]);
+        console.log("*** app.post/user/login 009 - TOKEN: ");
+        console.log(token);
+        console.log("*** app.post/user/login 010 - TOKENINSTANCE.rows[0]: ");
+        console.log(tokenInstance.rows[0]);
+        console.log("*** app.post/user/login 011 - TOKENHASH: ");
         console.log(tokenInstance.rows[0].tokenHash);
 
-        console.log('*** app.post/user/login 012 - CREATETOKEN - setting the AUTH header userInstance.row')
-        console.log(userInstance.rows[0]);
+        console.log('*** app.post/user/login 012 - setting the AUTH header userInstance.row')
 
         //res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
-        res.header('Auth', tokenInstance.rows[0].tokenHash).json(userInstance.rows[0]);
-//        res.header('Auth', token).json(userInstance);
+        //res.header('Auth', token).json(userInstance.rows[0]);
+        res.setHeader('Auth', token);
 
-        var verToken = req.get('Auth') || '';
-        console.log('*** app.post/user/login 013 - CREATETOKEN - Verify the AUTH header: ' + verToken);
+        var verToken = res.getHeader('Auth') || 'Nada';
+        console.log('*** app.post/user/login 013 - Verify the AUTH header: ' + verToken);
 
         res.redirect('/home');
     }).catch(function(err) {
