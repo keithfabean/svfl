@@ -91,8 +91,8 @@ app.get('/home', function(req, res) {
 
 // This is an example of hooking up a request handler with a specific request
 // path and HTTP verb using the Express routing API.
-app.get('/standings', middleware.requireAuthentication, function(req, res) {
-//app.get('/standings', function(req, res) {
+//app.get('/standings', middleware.requireAuthentication, function(req, res) {
+app.get('/standings', function(req, res) {
     console.log("*** app.get/standings 001 - ENTRY-POINT");
     //	console.log("*** app.get/standings 002 - Request.body.username: " + req.body.username);
 
@@ -193,6 +193,7 @@ app.post('/signin', function(req, res){
         console.log(token);
 
         userInstance = userResult;
+
         console.log('**** app.post user/login **** - userInstance: ');
         console.log(userInstance);
 
@@ -208,19 +209,24 @@ app.post('/signin', function(req, res){
         console.log("*** app.post/user/login 011 - TOKENHASH: ");
         console.log(tokenInstance.rows[0].tokenHash);
 
-        console.log('*** app.post/user/login 012 - setting the AUTH header userInstance.row')
+        console.log('*** app.post/user/login 011a - setting the Content-Type Header')
+        res.setHeader('Content-Type', 'application/json');
 
+        console.log('*** app.post/user/login 012 - setting the AUTH header userInstance.row')
         //res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
-        //res.header('Auth', token).json(userInstance.rows[0]);
+        //res.setHeader('Auth', token).json(userInstance.rows[0]);
         res.setHeader('Auth', token);
+
+        // console.log('*** app.post/user/login 012a - setting res.json')
+        res.json(userInstance.rows[0]);
 
         var verToken = res.getHeader('Auth') || 'Nada';
         console.log('*** app.post/user/login 013 - Verify the AUTH header: ' + verToken);
 
-        res.redirect('/home');
+        res.redirect('/standings');
     }).catch(function(err) {
         //res.status(401).send('Could not authenticate.' + err);
-        console.log("*** app.post/user/login 020 - REDIRECT - SIGNIN");
+        console.log("*** app.post/user/login 020 - CATCH Block REDIRECT - SIGNIN");
         res.redirect('/signin');
     });
 
