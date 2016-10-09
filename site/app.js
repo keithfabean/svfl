@@ -91,8 +91,8 @@ app.get('/home', function(req, res) {
 
 // This is an example of hooking up a request handler with a specific request
 // path and HTTP verb using the Express routing API.
-//app.get('/standings', middleware.requireAuthentication, function(req, res) {
-app.get('/standings', function(req, res) {
+app.get('/standings', middleware.requireAuthentication, function(req, res) {
+//app.get('/standings', function(req, res) {
     console.log("*** app.get/standings 001 - ENTRY-POINT");
     //	console.log("*** app.get/standings 002 - Request.body.username: " + req.body.username);
 
@@ -218,7 +218,7 @@ app.post('/signin', function(req, res){
         res.setHeader('Auth', token);
 
         // console.log('*** app.post/user/login 012a - setting res.json')
-        res.json(userInstance.rows[0]);
+        //res.json(userInstance.rows[0]);
 
         var verToken = res.getHeader('Auth') || 'Nada';
         console.log('*** app.post/user/login 013 - Verify the AUTH header: ' + verToken);
