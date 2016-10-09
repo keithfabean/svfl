@@ -28,7 +28,7 @@ var env = process.env.NODE_ENV || 'development';
             password: "sBsaLykzxWuXI7ZjR_QeZwpimM",
             database: "d6t3kl9igl2kdc",
             port: 5432,
-            host: "ec2-23-23-95-27.compute-1.amazonaws.com"
+            host: "ec2-23-23-95-27.compute-1.amazonaws.com",
             ssl: true
         });
 
