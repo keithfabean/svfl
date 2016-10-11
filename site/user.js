@@ -104,6 +104,26 @@ exports.createToken = function(token){
 };
 
 //----------------------------------------------------------------------------------
+// Delete the access token from the db
+exports.deleteToken = function(token){
+    console.log("*** user.deleteToken 001 - deleteToken - ENTRY-POINT");
+    return new Promise(function (resolve, reject){
+
+        var hash = cryptojs.MD5(token).toString();
+        console.log('**** deleteToken **** - token value: ' + token);
+        console.log('**** deleteToken **** - token hash: ' + hash);
+
+        //-----------   |SQL Statement ---------------------------------------|  |$1 variable|
+        dbConnect.query('DELETE FROM tokens t WHERE t."tokenHash" = ($1::text)', [hash], function (err, tokenInstance) {
+            resolve(tokenInstance);
+        }, function(err){
+            console.log("*** user.deleteToken 005 - deleteToken - DELETE error: " + err);
+            reject();
+        });
+    });
+};
+
+//----------------------------------------------------------------------------------
 // Write the access token to the db
 exports.findToken = function(tokenHash){
     console.log("*** user.findToken 001 - ENTRY-POINT");

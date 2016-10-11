@@ -8,6 +8,11 @@ console.log('*** app.js *** - Entry Point')
 express = require('express');
 app = express();
 
+// These lines are required to set up Express session management.
+session = require('express-session');
+app.use(session({secret: '@#Sv%$fL*&'}));
+var sess;
+
 // Global app configuration section
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');  // Specify the folder to find templates
@@ -74,7 +79,7 @@ app.get('/about', function(req, res) {
 //----------------------------------------------------------------------------------------------
 // This is an example of hooking up a request handler with a specific request
 // path and HTTP verb using the Express routing API.
-app.get('/contact', function(req, res) {
+app.get('/contact', middleware.requireAuthentication, function(req, res) {
 //		console.log("*** app.get/contact 001 - Logged In UserName: " + Parse.User.current().get('username'));
         res.render('pages/contact', { titleText: 'SVFL Contact Information' });
 });
@@ -135,6 +140,36 @@ app.get('/users', function(req, res){
 });
 
 //----------------------------------------------------------------------------------------------
+// This is route request for logging out
+//----------------------------------------------------------------------------------------------
+app.get('/logout', function(req, res) {
+    console.log('*** Middleware.js *** - Session Auth: ' + sess.Auth);
+
+    sess = req.session;
+    //
+    // if(!sess.Auth) {
+    //     //next();
+    //     res.redirect('/signin');
+    // }
+    var token = sess.Auth;
+
+    user.deleteToken(token).then(function (tokenInstance) {
+        req.session.destroy(function(err) {
+            if(err) {
+                console.log('*** app.get/logout - SessionDestroy - ERROR: ' + err);
+                res.redirect('back');
+            } else {
+                res.redirect('/signin');
+            }
+        })
+    }).catch(function(err) {
+        console.log("*** app.post/user/login 020 - CATCH Block REDIRECT - SIGNIN");
+        //res.status(401).send('Could not authenticate.' + err);
+        res.redirect('/signin');
+    });
+});
+
+//----------------------------------------------------------------------------------------------
 
 app.get('/register', function(req, res){
 
@@ -184,6 +219,8 @@ app.post('/signin', function(req, res){
     var token;
 
     user.authenticate(body).then(function (userResult){
+        sess = req.session;
+
         console.log('*** app.post/user/login 002 - AUTHENTICATE - PROMISE RETURN ENTRY-POINT');
         console.log(userResult);
         //var token = user.generateToken('authentication', userResult);
@@ -209,19 +246,22 @@ app.post('/signin', function(req, res){
         console.log("*** app.post/user/login 011 - TOKENHASH: ");
         console.log(tokenInstance.rows[0].tokenHash);
 
-        console.log('*** app.post/user/login 011a - setting the Content-Type Header')
-        res.setHeader('Content-Type', 'application/json');
+        // console.log('*** app.post/user/login 011a - setting the Content-Type Header')
+        // res.setHeader('Content-Type', 'application/json');
 
         console.log('*** app.post/user/login 012 - setting the AUTH header userInstance.row')
         //res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
         //res.setHeader('Auth', token).json(userInstance.rows[0]);
         res.setHeader('Auth', token);
 
-        // console.log('*** app.post/user/login 012a - setting res.json')
-        //res.json(userInstance.rows[0]);
-
         var verToken = res.getHeader('Auth') || 'Nada';
         console.log('*** app.post/user/login 013 - Verify the AUTH header: ' + verToken);
+
+        //In this we are assigning email to sess.email variable.
+        //email comes from HTML page.
+          sess.Auth = token;
+          sess.owner = userInstance.rows[0];
+          //res.end('done');
 
         res.redirect('/standings');
     }).catch(function(err) {

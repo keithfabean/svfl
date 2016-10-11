@@ -13,11 +13,22 @@ var exports = module.exports = {};
 
 exports.requireAuthentication = function(req, res, next){
             console.log('*** Middleware.js *** - 1');
-            console.log(JSON.stringify(req.headers));
+            sess = req.session;
+
+            console.log('*** Middleware.js *** - Session Auth: ' + sess.Auth);
+
+            if(!sess.Auth) {
+                //next();
+                res.redirect('/signin');
+            }
+            var token = sess.Auth;
+
             //var token = req.get('Auth') || '';
-            var token = req.header('Auth') || '*** WHY IS THE Auth HEADER NOT HERE? ***';
+            //var token = req.header('Auth') || '';
+
             var tokenHash = cryptojs.MD5(token).toString();
 
+            //Session set when user Request our app via URL
             console.log('*** middleware.requireAuthentication - token: ' + token);
             console.log('*** middleware.requireAuthentication - tokenHash: ' + tokenHash);
 
@@ -30,6 +41,7 @@ exports.requireAuthentication = function(req, res, next){
                     console.log('*** middleware.requireAuthentication - NO TOKENINSTANCE:');
                     //throw new error();
                     req.session.error = 'Please sign in!';
+                    //next();
                     res.redirect('/signin');
                 }
 
