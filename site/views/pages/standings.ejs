@@ -45,23 +45,27 @@ background-color:#4CAF50;
 </head>
 
 <body>
-
+<!--
   <div>
     <center>
       <h1>SVFL Standings Page</h1
     </center>
   </div>
+-->
 
 <header>
   <!-- Include the Navagation bar on the page  ------------------------- -->
   <% include ../partials/header %>
 </header>
 
-<div class="ownerstandings">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-10 col-md-offset-2">
 
 <table rules=groups border=5>
 <thead border=2>
 <tr>
+    <th align="center">Pos.</th>
     <th align="center">Owner</th>
     <th>Last Week Totals</th>
     <th>This Week Totals</th>
@@ -77,28 +81,31 @@ console.log("*** standings.ejs - result length: " + standings.rows.length);
 for (var i=0; i < standings.rows.length; i++) { %>
     <div class="col-xs-12">
 <tr>
+    <td>
+      <%= i +1 %>
+    </td>
   <td>
     <%=
-      standings.rows[i].firstName + " " + standings.rows[i].lastName
+      standings.rows[i].first_name + " " + standings.rows[i].last_name
     %>
   </td>
   <td>
-    <%= standings.rows[i].lastWeekTotals%>
+    <%= standings.rows[i].last_week_totals%>
   </td>
   <td>
-    <%= standings.rows[i].thisWeekTotals%>
+    <%= standings.rows[i].this_week_totals%>
   </td>
   <td>
-    <%= standings.rows[i].grandTotals%>
+    <%= standings.rows[i].grand_totals%>
   </td>
   <td>
-    <%= standings.rows[i].weeklyAverage%>
+    <%= standings.rows[i].weekly_average%>
   </td>
   <td>
-    <%= standings.rows[i].currentWinnings%>
+    <%= standings.rows[i].current_winnings%>
   </td>
   <td>
-    <%= standings.rows[i].pointsFromPlayoffs%>
+    <%= standings.rows[i].points_from_playoffs%>
   </td>
 </tr>
 <%
@@ -106,6 +113,8 @@ for (var i=0; i < standings.rows.length; i++) { %>
 %>
 </tbody>
 </table>
+</div>
+</div>
 </div>
 
 <!--  Include the Common Footer from the Partials Folder ---------  -->

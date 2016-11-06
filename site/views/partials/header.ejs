@@ -1,47 +1,210 @@
 <!-- views/partials/header.ejs -->
 
 <!--   GAMES BAR  -----------------------------------------  -->
-<table border=1 width="100%">
-    <tr>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-        <td>Team/Score<br>Team/Score<br>Status</td>
-    </tr>
-</table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-17">
+            <table border=1 width="100%">
+                <tbody>
+                    <tr>
+                        <td align="center">WEEK
+                            <br>
+                            <%=
+                            games.rows[0].week
+                            %>
+                        </td>
+                        <%
+                        console.log("*** header.ejs - twGames length: " + games.rows.length);
+                        for (var i=0; i < games.rows.length; i++) { %>
+                        <td align="justify">
+                            <%=
+                            games.rows[i].away_team + ' ' + games.rows[i].away_score
+                            %>
+                            <br>
+                            <%=
+                            games.rows[i].home_team + ' ' + games.rows[i].home_score
+                            %>
+                            <br>
+                            <%
+                            if (games.rows[i].final === 'false') {
+                                %>
+                                <%=
+                                games.rows[i].day_time
+                                %>
+                                <%
+                            } else { %>
+                                FINAL
+                                <%
+                            }
+                            %>
+                        </td>
+                        <%
+                        }
+                        %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <!--   END GAMES BAR  -----------------------------------------  -->
 
-<!--   NAVIGATION BAR  -----------------------------------------  -->
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteNameLink</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-17">
+            <table border=1 width="100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    WEEK
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <%=
+                                    games.rows[0].week
+                                    %>
+                                </div>
+                            </div>
+                        </td>
+
+                        <% console.log("*** header.ejs - twGames length: " + games.rows.length);
+                        for (var i=0; i < games.rows.length; i++) { %>
+
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <%=
+                                        games.rows[i].away_team
+                                        %>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <%=
+                                        games.rows[i].away_score
+                                        %>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <%=
+                                        games.rows[i].home_team
+                                        %>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <%=
+                                        games.rows[i].home_score
+                                        %>
+                                    </div>
+                                </div>
+                                <%
+                                if (games.rows[i].final === 'false') {
+                                    %>
+                                    <%=
+                                    games.rows[i].day_time
+                                    %>
+                                    <%
+                                } else { %>
+                                    FINAL
+                                    <%
+                                }
+                                %>
+                            </td>
+                        <%
+                        }
+                        %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active" ><a href="/home">Home</a></li>
-      <li><a href="/standings">Standings</a></li>
-      <li><a href="/rosters">Rosters</a></li>
-      <li><a href="/playerlist">Player List</a></li>
-      <li><a href="/teamlist">Teams</a></li>
-      <li><a href="/draft">Draft</a></li>
-      <li><a href="/moves">Moves</a></li>
-      <li><a href="/contact">Contact</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/signin">Sign In</a></li>
-      <li><a href="/logout">Logout</a></li>
-    </ul>
-  </div>
-</nav>
+</div>
+
+
+<!--   NAVIGATION BAR  -----------------------------------------  -->
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-inverse">
+            <!--
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteNameLink</a>
+            </div>
+            -->
+            <ul class="nav navbar-nav">
+                <li class="active" ><a href="/home">Home</a></li>
+                <li><a href="/standings">Standings</a></li>
+                <li><a href="/rosters">Rosters</a></li>
+                <li><a href="/lineup">Line Ups</a></li>
+                <li><a href="/scoring">Scoring</a></li>
+                <li><a href="/draft">Draft</a></li>
+                <li><a href="/moves">Moves</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/signin">Sign In</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
 <!--   END NAVIGATION BAR  -----------------------------------------  -->
+
+<!--   USER INFORMATION BAR  -----------------------------------------  -->
+<div class="container-fluid">
+    <div class="row">
+        <table border=1 width="100%">
+            <tbody>
+                <tr>
+                    <div class="col-md-1">
+                        <td>Owner:
+                            <%
+                            if (!owner) {
+                                %>
+                                UNKNOWN
+                                <%
+                            } else { %>
+                                <%=
+                                owner.rows[0].full_name
+                                %>
+                                <%
+                            }
+                            %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>Rank:<%=  %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>Last Week Tot:<%=  %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>This Week Tot:<%=  %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>Grand Tot:<%=  %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>AVG:<%=  %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>Pts Out:<%=  %>
+                        </td>
+                    </div>
+                    <div class="col-md-1">
+                        <td>Winnings:<%=  %>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--   END USER INFORMATION BAR  -----------------------------------------  -->

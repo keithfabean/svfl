@@ -29,14 +29,14 @@ exports.requireAuthentication = function(req, res, next){
             var tokenHash = cryptojs.MD5(token).toString();
 
             //Session set when user Request our app via URL
-            console.log('*** middleware.requireAuthentication - token: ' + token);
-            console.log('*** middleware.requireAuthentication - tokenHash: ' + tokenHash);
+            // console.log('*** middleware.requireAuthentication - token: ' + token);
+            // console.log('*** middleware.requireAuthentication - tokenHash: ' + tokenHash);
 
             // If the token exists in the DB we're good to go
             console.log('*** Middleware.js *** - 2');
             user.findToken(tokenHash).then(function(tokenInstance){
-                console.log('*** middleware.requireAuthentication - tokenInstance: ');
-                console.log(tokenInstance);
+                // console.log('*** middleware.requireAuthentication - tokenInstance: ');
+                // console.log(tokenInstance);
                 if (!tokenInstance || tokenInstance.rowCount === 0){
                     console.log('*** middleware.requireAuthentication - NO TOKENINSTANCE:');
                     //throw new error();
@@ -48,7 +48,14 @@ exports.requireAuthentication = function(req, res, next){
                 req.token = tokenInstance;
                 return user.findByToken(token);
             }).then(function(userInstance){
+                // Save the user/Owner information for use on the web pages
                 req.user = userInstance;
+                gOwner = userInstance;
+
+                console.log('*** middleware.requireAuthentication - gOwner ROWCOUNT: ' + gOwner.rowCount);
+                console.log('*** middleware.requireAuthentication - gOwner: ' + gOwner.rows[0].full_name);
+
+
                 next();
             }).catch(function(){
                 console.log('*** middleware.requireAuthentication - CATCH ERROR:');

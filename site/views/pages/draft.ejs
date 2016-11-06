@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Start of HEAD  ---------------------------------------------------- -->
+<head>
+  <!--  Include the Common Head file from the Partials Folder ---------  -->
+  <% include ../partials/head %>
+  <!--  Figure out how to move the css stuff into this file
+     include ../public/css/svfl.css
+  -->
+
+    <!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+    <style>
+      ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      }
+
+      li {
+      float: left;
+      }
+
+      li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      }
+
+      a:hover:not(.active) {
+      background-color: #111;
+      }
+
+      .active {
+      <!-- background-color:grey; -->
+      }
+    </style>
+    <!-- #4CAF50 -->
+    <!-- End of STYLE for Navigation Bar  ----------------------------- -->
+
+    <!-- -----  This stuff is needed for the Dynamic Tab  -------------------- -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- -----  This stuff is needed for the Dynamic Tab  -------------------- -->
+
+</head>
+<!-- End of HEAD  ---------------------------------------------------- -->
+
+<!-- Start of Body  ---------------------------------------------------- -->
+<body>
+    <header>
+        <!-- Include the Navagation bar on the page  ------------------------- -->
+        <% include ../partials/header %>
+    </header>
+    <!--
+    <div>
+    <center>
+    <h1>SVFL Draft Page</h1
+</center>
+</div>
+-->
+<div class="container">
+<div class="row">
+    <div class="col-md-7">
+        <!--   DYNAMIC TABS  -----------------------------------------  -->
+        <!-- <div class="container"> -->
+            <h2>Player Draft</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#QB">QB</a></li>
+                <li><a data-toggle="tab" href="#RB">RB</a></li>
+                <li><a data-toggle="tab" href="#RC">RC</a></li>
+                <li><a data-toggle="tab" href="#Kick">Kick</a></li>
+                <li><a data-toggle="tab" href="#DEF">DEF</a></li>
+            </ul>
+
+            <form method="post" action="/draft">
+                <input type="hidden" name="ownerid" value="<%= owner.rows[0].owner_id%>">
+
+            <div class="tab-content">
+                <!-- <h3>Quarterbacks</h3>  -->
+                <div id="QB" class="tab-pane fade in active">
+                    <div>
+                        <table id="tbQuarterback" class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th>Owner 1</th>
+                                    <th>Owner 2</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <%
+                                var qbList = playerList.qb;
+                                console.log("*** draft.ejs - PLAYER QB length: " + qbList.rows.length);
+                                for (var i=0; i < qbList.rows.length; i++) {
+                                    %>
+
+                                    <tr>
+                                        <td>
+                                            <%= qbList.rows[i].full_name%>
+                                        </td>
+                                        <td>
+                                            <%= qbList.rows[i].team%>
+                                        </td>
+                                        <td>
+                                            <%= qbList.rows[i].position%>
+                                        </td>
+                                        <td>
+                                            <%= qbList.rows[i].status%>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name="addplayerId" value="<%= qbList.rows[i].player_id%>" background-color="#4CAF50">
+                                                Draft
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <%
+                                }   //close the for loop
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="RB" class="tab-pane fade">
+                    <!-- <h3>Running Backs</h3> -->
+                    <div>
+                        <table id="tbRunningback" class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th>Owner 1</th>
+                                    <th>Owner 2</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <%
+                                var rbList = playerList.rb;
+                                console.log("*** draft.ejs - PLAYER RB length: " + rbList.rows.length);
+                                for (var i=0; i < rbList.rows.length; i++) {
+                                    %>
+
+                                    <tr>
+                                        <td>
+                                            <%= rbList.rows[i].full_name%>
+                                        </td>
+                                        <td>
+                                            <%= rbList.rows[i].team%>
+                                        </td>
+                                        <td>
+                                            <%= rbList.rows[i].position%>
+                                        </td>
+                                        <td>
+                                            <%= rbList.rows[i].status%>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name="addplayerId" value="<%= rbList.rows[i].player_id%>" background-color="#4CAF50">
+                                                Draft
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <%
+                                }   //close the for loop
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="RC" class="tab-pane fade">
+                    <!-- <h3>Revievers</h3> -->
+                    <div>
+                        <table id="tbReceivers" class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th>Owner 1</th>
+                                    <th>Owner 2</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <%
+                                var rcList = playerList.rc;
+                                console.log("*** draft.ejs - PLAYER RC length: " + rcList.rows.length);
+                                for (var i=0; i < rcList.rows.length; i++) {
+                                    %>
+
+                                    <tr>
+                                        <td>
+                                            <%= rcList.rows[i].full_name%>
+                                        </td>
+                                        <td>
+                                            <%= rcList.rows[i].team%>
+                                        </td>
+                                        <td>
+                                            <%= rcList.rows[i].position%>
+                                        </td>
+                                        <td>
+                                            <%= rcList.rows[i].status%>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name="addplayerId" value="<%= rcList.rows[i].player_id%>" background-color="#4CAF50">
+                                                Draft
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <%
+                                }   //close the for loop
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="Kick" class="tab-pane fade">
+                    <!-- <h3>Kickers</h3> -->
+                    <div>
+                        <table id="tbKicker" class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th>Owner 1</th>
+                                    <th>Owner 2</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <%
+                                var kickerList = playerList.kickers;
+                                console.log("*** draft.ejs - PLAYER KICKER length: " + kickerList.rows.length);
+                                for (var i=0; i < kickerList.rows.length; i++) {
+                                    %>
+
+                                    <tr>
+                                        <td>
+                                            <%= kickerList.rows[i].full_name%>
+                                        </td>
+                                        <td>
+                                            <%= kickerList.rows[i].team%>
+                                        </td>
+                                        <td>
+                                            <%= kickerList.rows[i].position%>
+                                        </td>
+                                        <td>
+                                            <%= kickerList.rows[i].status%>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name="addplayerId" value="<%= kickerList.rows[i].player_id%>" background-color="#4CAF50">
+                                                Draft
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <%
+                                }   //close the for loop
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="DEF" class="tab-pane fade">
+                    <!-- <h3>Defence</h3> -->
+                    <div>
+                        <table id="tbKicker" class="table" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Team</th>
+                                    <th>Position</th>
+                                    <th>Status</th>
+                                    <th>Owner 1</th>
+                                    <th>Owner 2</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <%
+                                var defList = playerList.defense;
+                                console.log("*** draft.ejs - PLAYER Defense length: " + defList.rows.length);
+                                for (var i=0; i < defList.rows.length; i++) {
+                                    %>
+
+                                    <tr>
+                                        <td>
+                                            <%= defList.rows[i].full_name%>
+                                        </td>
+                                        <td>
+                                            <%= defList.rows[i].team%>
+                                        </td>
+                                        <td>
+                                            <%= defList.rows[i].position%>
+                                        </td>
+                                        <td>
+                                            <%= defList.rows[i].status%>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>OPEN
+                                            <%= %>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name="addplayerId" value="<%= defList.rows[i].player_id%>" background-color="#4CAF50">
+                                                Draft
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <%
+                                }   //close the for loop
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>  <!-- END div class="tab-content"  -->
+            </form>
+
+        <!--  </div>  <!-- END div class="container" -->
+
+        <!--   END DYNAMIC TABS  -----------------------------------------  -->
+    </div>  <!-- END div class="col-md-6"   -->
+
+
+    <!--   Roster Table List  -----------------------------------------  -->
+    <div class="col-md-4 col-md-offset-1">
+        <h2>Roster</h2>
+        <table id="tbRoster" class="table table-striped" border="1">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Drop</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                console.log("*** draft.ejs - OWNER ROSTER length: " + roster.rows.length);
+                for (var i=0; i < roster.rows.length; i++) {
+                    %>
+                <tr>
+                    <td>
+                        <%= roster.rows[i].full_name%>
+                    </td>
+                    <td>
+                        <%= roster.rows[i].team%>
+                    </td>
+                    <td>
+                        <%= roster.rows[i].position%>
+                    </td>
+                    <td>
+                        <%= roster.rows[i].category%>
+                    </td>
+                    <td>
+                        <%= roster.rows[i].status%>
+                    </td>
+                    <td>Action button?</td>
+                </tr>
+                <%
+                }   //close the for loop
+                %>
+            </tbody>
+        </table>
+
+    </div>  <!-- END div class="col-md-4"   -->
+    <!--   Roster Table List  -----------------------------------------  -->
+</div>  <!-- END div class="row"    -->
+</div>  <!-- END div class="container" -->
+
+<!--  Include the Common Footer from the Partials Folder ---------  -->
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+<!-- End of Body  ---------------------------------------------------- -->
+
+</html>
