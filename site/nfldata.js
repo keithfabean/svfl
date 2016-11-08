@@ -11,7 +11,8 @@ var exports = module.exports = {};
 exports.getThisWeekGames = function(callback) {
     console.log("*** nfldata.getThisWeekGames 001 - ENTRY-POINT");
 
-        var qry = 'SELECT g.week, g.away_team, g.away_score, g.home_team, g.home_score, g.day_of_week, finished, g.start_time, to_char(start_time, \'DY HH12:MI\') AS day_time ';
+        var qry = 'SELECT m.season_type, m.season_year, g.week, g.away_team, g.away_score, ';
+        qry = qry + 'g.home_team, g.home_score, g.day_of_week, finished, g.start_time, to_char(start_time, \'DY HH12:MI\') AS day_time ';
         qry = qry + 'FROM game g INNER JOIN meta m ON g.season_year = m.season_year AND g.season_type = m.season_type AND g.week = m.week';
 
         //qry = 'SELECT * FROM users';

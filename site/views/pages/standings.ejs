@@ -11,37 +11,6 @@
       include ../public/css/svfl.css
     -->
 
-<!-- Start of STYLE for Navigation Bar  ----------------------------- -->
-<style>
-ul {
-list-style-type: none;
-margin: 0;
-padding: 0;
-overflow: hidden;
-background-color: #333;
-}
-
-li {
-float: left;
-}
-
-li a {
-display: block;
-color: white;
-text-align: center;
-padding: 14px 16px;
-text-decoration: none;
-}
-
-a:hover:not(.active) {
-background-color: #111;
-}
-
-.active {
-background-color:#4CAF50;
-}
-</style>
-<!-- End of STYLE for Navigation Bar  ----------------------------- -->
 </head>
 
 <body>
@@ -59,63 +28,234 @@ background-color:#4CAF50;
 </header>
 
 <div class="container-fluid">
-<div class="row">
-<div class="col-md-10 col-md-offset-2">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
 
-<table rules=groups border=5>
-<thead border=2>
-<tr>
-    <th align="center">Pos.</th>
-    <th align="center">Owner</th>
-    <th>Last Week Totals</th>
-    <th>This Week Totals</th>
-    <th>Grand Totals</th>
-    <th>Weekly Avg.</th>
-    <th>Current Winnings</th>
-    <th>Points from Playoffs</th>
-</tr>
-</thead>
-<tbody border=2>
-  <%
-console.log("*** standings.ejs - result length: " + standings.rows.length);
-for (var i=0; i < standings.rows.length; i++) { %>
-    <div class="col-xs-12">
-<tr>
-    <td>
-      <%= i +1 %>
-    </td>
-  <td>
-    <%=
-      standings.rows[i].first_name + " " + standings.rows[i].last_name
-    %>
-  </td>
-  <td>
-    <%= standings.rows[i].last_week_totals%>
-  </td>
-  <td>
-    <%= standings.rows[i].this_week_totals%>
-  </td>
-  <td>
-    <%= standings.rows[i].grand_totals%>
-  </td>
-  <td>
-    <%= standings.rows[i].weekly_average%>
-  </td>
-  <td>
-    <%= standings.rows[i].current_winnings%>
-  </td>
-  <td>
-    <%= standings.rows[i].points_from_playoffs%>
-  </td>
-</tr>
-<%
-}
-%>
-</tbody>
-</table>
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th align="center">Pos.</th>
+                        <th align="center">Owner</th>
+                        <th>Last Week Totals</th>
+                        <th>This Week Totals</th>
+                        <th>Grand Totals</th>
+                        <th>Weekly Avg.</th>
+                        <th>Current Winnings</th>
+                        <th>Points from Playoffs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% console.log("*** standings.ejs - result length: " + standings.rows.length);
+                        for (var i=0; i < standings.rows.length; i++) {
+                    %>
+                        <div class="col-xs-12">
+                            <tr>
+                                <td align="center">
+                                    <%= i +1 %>
+                                </td>
+                                <td>
+                                    <%=
+                                    standings.rows[i].first_name + " " + standings.rows[i].last_name
+                                    %>
+                                </td>
+                                <td align="center">
+                                    <%= standings.rows[i].last_week_totals%>
+                                </td>
+                                <td align="center">
+                                    <%= standings.rows[i].this_week_totals%>
+                                </td>
+                                <td align="center">
+                                    <%= standings.rows[i].grand_totals%>
+                                </td>
+                                <td align="center">
+                                    <%= standings.rows[i].weekly_average%>
+                                </td>
+                                <td align="center">
+                                    <%= standings.rows[i].current_winnings%>
+                                </td>
+                                <td align="center">
+                                    <%= standings.rows[i].points_from_playoffs%>
+                                </td>
+                            </tr>
+                            <%
+                        }
+                        %>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+    </div>
 </div>
+
+<!-- *******   4 by 4 grid of Owner Line up/results for the week *********** -->
+<div class="container-fluid">
+    <div class="row">
+
+<!--  Owner line up table ---------  -->
+        <div class="col-sm-3">
+            <table class="table table-striped table-bordered  table-condensed">
+                <thead border="1">
+                    <tr>
+                        <th>Owner</th>
+                        <th></th>
+                        <th></th>
+                        <th>Start</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody border="2">
+                    <% %>
+                    <tr>
+                        <td>Player
+                            <%= %>
+                        </td>
+                        <td align="center">Team
+                            <%=  %>
+                        </td>
+                        <td align="center">Position
+                            <%= %>
+                        </td>
+                        <td align="center">Y/N
+                            <%= %>
+                        </td>
+                        <td align="center">0
+                            <%= %>
+                        </td>
+                    </tr>
+                    <%
+
+                    %>
+                </tbody>
+            </table>
+        </div>
+
+<!--  Owner line up table ---------  -->
+
+        <div class="col-sm-3">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead border="1">
+                    <tr>
+                        <th>Owner</th>
+                        <th></th>
+                        <th></th>
+                        <th>Start</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody border="2">
+                    <% %>
+                    <tr>
+                        <td>Player
+                            <%= %>
+                        </td>
+                        <td align="center">Team
+                            <%=  %>
+                        </td>
+                        <td align="center">Position
+                            <%= %>
+                        </td>
+                        <td align="center">Y/N
+                            <%= %>
+                        </td>
+                        <td align="center">0
+                            <%= %>
+                        </td>
+                    </tr>
+                    <%
+
+                    %>
+                </tbody>
+            </table>
+        </div>
+
+        <!--  Owner line up table ---------  -->
+
+        <div class="col-sm-3">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead border="1">
+                    <tr>
+                        <th>Owner</th>
+                        <th></th>
+                        <th></th>
+                        <th>Start</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody border="2">
+                    <% %>
+                    <tr>
+                        <td>Player
+                            <%= %>
+                        </td>
+                        <td align="center">Team
+                            <%=  %>
+                        </td>
+                        <td align="center">Position
+                            <%= %>
+                        </td>
+                        <td align="center">Y/N
+                            <%= %>
+                        </td>
+                        <td align="center">0
+                            <%= %>
+                        </td>
+                    </tr>
+                    <%
+
+                    %>
+                </tbody>
+            </table>
+        </div>
+
+                <!--  Owner line up table ---------  -->
+
+        <div class="col-sm-3">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead border="1">
+                    <tr>
+                        <th>Owner</th>
+                        <th></th>
+                        <th></th>
+                        <th>Start</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody border="2">
+                    <% %>
+                    <tr>
+                        <td>Player
+                            <%= %>
+                        </td>
+                        <td align="center">Team
+                            <%=  %>
+                        </td>
+                        <td align="center">Position
+                            <%= %>
+                        </td>
+                        <td align="center">Y/N
+                            <%= %>
+                        </td>
+                        <td align="center">0
+                            <%= %>
+                        </td>
+                    </tr>
+                    <%
+
+                    %>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 </div>
+
+
+<!-- *********************************************************************** -->
 
 <!--  Include the Common Footer from the Partials Folder ---------  -->
 <footer>

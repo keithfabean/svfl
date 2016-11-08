@@ -151,7 +151,7 @@ app.get('/draft', middleware.requireAuthentication, function(req, res) {
         playersList = players;
 
         ownerId = gOwner.rows[0].owner_id;
-        return user.getRosterByOwner(ownerId);
+        return main.getRosterByOwner(ownerId);
 
     }).then(function(ownerRoster){
         console.log('*** app.get/draft - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
@@ -179,7 +179,7 @@ app.post('/draft', middleware.requireAuthentication, function(req, res) {
     console.log("*** app.post/draft *** - Request.Body.Ownerid" + req.body.ownerid);
     console.log("*** app.post/draft *** - Request.Body.AddPlayerId" + req.body.addplayerId);
 
-    user.addRoster(req).then(function(rosterItem){
+    main.addRoster(req).then(function(rosterItem){
         console.log('*** app.post/draft - *** ROSTERITEM Count: ' + rosterItem.rowCount);
         res.redirect('/draft');
 
@@ -235,12 +235,47 @@ app.get('/standings', middleware.requireAuthentication, function(req, res) {
 }); //end /standings
 
 //----------------------------------------------------------------------------------------------
-// This is route request for
+// This is route request for displaying the lineup page
 //----------------------------------------------------------------------------------------------
 
 app.get('/lineup', middleware.requireAuthentication, function(req, res){
+    console.log('*** app.get/lineup - *** ENTRY POINT');
 
-    res.render('pages/lineup', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner});
+    gOwner = req.user
+    ownerId = gOwner.rows[0].owner_id;
+
+    main.getRosterByOwner(ownerId).then(function(ownerRoster){
+        console.log('*** app.get/lineup - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
+
+        res.render('pages/lineup', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner, roster: ownerRoster});
+
+    }).catch(function(err) {
+        console.log("*** app.get/lineup *** - ERROR EXIT-POINT");
+        console.log(err);
+        //res.status(500).send();
+    });
+
+});
+
+//----------------------------------------------------------------------------------------------
+// This is route request for displaying the lineup page
+//----------------------------------------------------------------------------------------------
+
+app.post('/lineup', middleware.requireAuthentication, function(req, res){
+    console.log('*** app.post/lineup - *** ENTRY POINT');
+
+    console.log("*** app.post/lineup *** - Request.Body.Ownerid" + req.body.ownerid);
+    console.log("*** app.post/lineup *** - Request.Body.AddPlayerId" + req.body.addplayerId);
+
+    user.createLineup(req).then(function(rosterItem){
+        console.log('*** app.post/lineup - *** ROSTERITEM Count: ' + rosterItem.rowCount);
+        res.redirect('/lineup');
+
+    }, function(err) {
+        console.log("*** app.post/lineup *** - ERROR EXIT-POINT");
+        console.log(err);
+        //res.status(500).send();
+    });
 
 });
 
@@ -335,8 +370,19 @@ app.post('/register', function(req, res){
 //----------------------------------------------------------------------------------------------
 
 app.get('/rosters', middleware.requireAuthentication, function(req, res){
+    console.log('*** app.get/rosters - *** ENTRY POINT');
 
     res.render('pages/rosters', {titleText: 'SVFL Rosters', games: twGames, owner: gOwner});
+
+});
+
+//----------------------------------------------------------------------------------------------
+// This is route request for
+//----------------------------------------------------------------------------------------------
+
+app.get('/rules', middleware.requireAuthentication, function(req, res){
+
+    res.render('pages/rules', {titleText: 'SVFL Rosters', games: twGames, owner: gOwner});
 
 });
 
@@ -434,6 +480,26 @@ app.post('/signin', function(req, res){
         console.log("*** app.post/user/login 020 - CATCH Block REDIRECT - SIGNIN");
         res.redirect('/signin');
     });
+
+});
+
+//----------------------------------------------------------------------------------------------
+// This is route request for
+//----------------------------------------------------------------------------------------------
+
+app.get('/trades', middleware.requireAuthentication, function(req, res){
+
+    res.render('pages/trades', {titleText: 'SVFL Trades', games: twGames, owner: gOwner});
+
+});
+
+//----------------------------------------------------------------------------------------------
+// This is route request for
+//----------------------------------------------------------------------------------------------
+
+app.post('/trades', middleware.requireAuthentication, function(req, res){
+
+    res.redirect('/trades');
 
 });
 

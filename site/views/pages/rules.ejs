@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Start of HEAD  ---------------------------------------------------- -->
+<head>
+<!--
+    <meta charset="UTF-8">
+    <title>Fantasy About</title>
+-->
+
+  <!--  Include the Common Head file from the Partials Folder ---------  -->
+  <% include ../partials/head %>
+  <!--  Figure out how to move the css stuff into this file
+     include ../public/css/svfl.css
+  -->
+
+  <style>
+  h3.ex1 {
+      margin-left: 1cm;
+  }
+  h4.ex1 {
+      margin-left: 1cm;
+  }
+  p {
+      margin-left: 1cm;
+  }
+  p.ex1 {
+      margin-left: 1cm;
+  }
+  p.ex2 {
+      margin-left: 2cm;
+  }
+  p.ex3 {
+      margin-left: 3cm;
+  }
+  p.ex4 {
+      margin-left: 4cm;
+  }
+  </style>
+
+</head>
+<!-- End of HEAD  ---------------------------------------------------- -->
+
+<!-- Start of Body  ---------------------------------------------------- -->
+<body>
+
+  <header>
+    <!-- Include the Navagation bar on the page  ------------------------- -->
+    <% include ../partials/header %>
+  </header>
+
+<!-- *********************************************************************** -->
+<h1 align="center">SILICON VALLEY FOOTBALL LEAGUE</h1>
+<br><br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-11">
+            <p>
+                The Silicon Valley Football League (SVFL) is a league for football fans who want more than just picking the winner each week.  Each member of the SVFL becomes an owner of a team of NFL players from various NFL teams by drafting players in a common draft with other owners in the SVFL.  Each week, every owner chooses a starting line-up, and makes or loses money by how well his starting line-up does in relationship to the other teams in the SVFL.  If his team’s point total is above the league average, the owner makes money.  If his point total is below the league average, the owner loses money.  Just like the NFL the top SVFL teams make the Play-offs with the top two teams advancing to the Super Bowl!
+            </p>
+        </div>
+    </div>
+
+<h2 align="center">Rules</h2>
+
+<section>
+    <h3>Entry Fee:</h3>
+
+    <p>
+        The cost to join the SVFL is $77.00.  This money all goes directly to the Play-off and Super Bowl pool except for a $2.00 per person Trophy engraving fee and misc. fee.   Roster moves are not allowed unless the owner’s entry fee is paid in full.
+    </p>
+</section>
+
+<section>
+    <h3>Draft:</h3>
+
+    <p>
+        There is a common draft the Wednesday before the NFL season for all owners in the SVFL.  Draft order is decided the evening of the draft by drawing.  The SVFL Draft is an inverted draft, meaning that in even-numbered rounds of the draft the drafting order is reversed of the odd-numbered rounds.  Thus if you draft first in the first round, you will draft last in the second round and so-on.
+    </p>
+    <p>
+        Once the draft starts each owner has one minute each round to make their selection before the next owner can make his pick.  If after one minute an owner has not made a pick the next owner is on the clock and can make a pick.  The owner who exceeded the one minute can make his pick at any time.
+    </p>
+    <p>
+        NFL players can only be drafted by only one team in the SVFL unless there are ten or more owners in the league.  When there are ten or more owners, each NFL player can be drafted twice.
+    </p>
+</section>
+
+<section>
+    <h3>Rosters:</h3>
+
+    <p>
+        Roster size in the SVFL is twelve players.  These twelve players can be any combination of positions that the owner wishes.  When there are more than ten owners and NFL players are drafted twice, no two SVFL teams can have more than three players in common and no owner can own the same player twice.
+    </p>
+</section>
+
+<section>
+    <h3>Starting Line-Ups:</h3>
+
+    <p>
+        Each week every owner submits a starting line-up.  SVFL starting line-up consists of the following:
+    </p>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Quarterback</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Kicker</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Running backs/Receivers (minimum one each)</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Def/Special Team (whole NFL team’s defense & special teams)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p>
+        Any owner who is negative can start 5 middle players and get the best 4(min 1 RB/RC).
+    </p>
+    <p>
+        Any owner not submitting a starting line-up before the start of the week’s first game will automatically have their previous week’s line-up.  If you have players playing on Thursday night you are allowed to give a partial line-up of just those players with the balance of your line-up by Sunday.
+    </p>
+    <p>
+        Exceptions are owners who are $50 down or more at the start of the football week.  Their line-ups are decided for them after that week’s football games are complete to give them the best possible score.
+    </p>
+    <p>
+        Those owners who are $100 down or more get credit for all players on their roster up to a maximum of two QBs, two Defs and two kickers.  All owners not over $50 out must start a defense that plays that week.
+    </p>
+</section>
+
+<section>
+    <h3>Mulligan Rule:</h3>
+
+    <p>
+        Once per season an owner may change one starting position in his line-up after the week is over.  This change must be done within 12 hours of the last game of the week.  Mulligans are non-tradable.
+    </p>
+</section>
+
+<section>
+    <h3>Running Backwards Rule:</h3>
+
+    <p>
+        Any owner who wants to take advantage of different milestones, can call or email in before the first game of the week and have the necessary points removed.
+    </p>
+
+    <p>
+        <b>NOTE:</b> This rule is not available for week 1.
+    </p>
+</section>
+
+<section>
+    <h3>Scoring:</h3>
+
+    <p>
+        Scoring in the SVFL goes like this:
+    </p>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    <tr>
+                        <td>TD Passes</td>
+                        <td>1-4  Yards</td>
+                        <td>3   Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>5-49 Yards</td>
+                        <td>6   Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>50+ Yards</td>
+                        <td>12  Points</td>
+                    </tr>
+                    <tr>
+                        <td>TD Receptions</td>
+                        <td>1-24 Yards</td>
+                        <td>6   Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>25+  Yards</td>
+                        <td>12  Points</td>
+                    </tr>
+                    <tr>
+                        <td>TD Rushes</td>
+                        <td>1-9  Yards</td>
+                        <td>6   Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>10+ Yards</td>
+                        <td>12  Points</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1">
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    <tr>
+                        <td>PAT</td>
+                        <td>Pass/Catch/Run</td>
+                        <td>2 Points</td>
+                    </tr>
+                    <tr>
+                        <td>Field Goals</td>
+                        <td>0-45 Yards</td>
+                        <td>3  Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>45+ Yards</td>
+                        <td>3  Points + 1 Point per Yard over 45.</td>
+                    </tr>
+                    <tr>
+                        <td>Def/Spec. TD</td>
+                        <td>0-49 Yards</td>
+                        <td>6  Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>50+ Yards</td>
+                        <td>12  Points</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Safety</td>
+                        <td>10  Points</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p>
+        Examples of Def/Special team TDs are punts, kick-offs, interceptions and fumbles returned for TDs.  Points scored by an NFL team taking the snap from center never count as special team or defensive points unless there is a change of possession.
+    </p>
+</section>
+
+<section>
+    <h3>15/25 Rule:</h3>
+
+    <p>
+        Your Def/Special team can make or lose you money in another way.  If your Def/Special team holds its opponent for that week to less than 15 points, you make a point for every point under 15.  If they give up more than 25 points you will have 1 point subtracted from your score for every point over 25.
+    </p>
+</section>
+
+<section>
+    <h3>Dan Marino Rule:</h3>
+
+    <p>
+        Any NFL player who has scored 150 points or more for SVFL owner(s) during the season will not be started by anyone who is positive in the standings.
+    </p>
+</section>
+
+<section>
+    <h3>Quarterback Option:</h3>
+
+    <p>
+        Quarterbacks are one of the most injured players in the NFL.  They are also probably the most valuable players.  This also stands true for the SVFL.  So what happens if your starting QB gets hurt on the first play of the game?  You would get zero QB points for that week.  That is unless you choose to take the Quarterback Option.  The Quarterback Option counts as one of your 12 players, but if your starting QB goes down during a game for any reason you get credit for any points that his back-ups score.  For the purpose of this rule the Quarterback is defined as anyone who throws a TD pass or accepts the snap from center.
+    </p>
+</section>
+
+<section>
+    <h3>Quarterback Back-Up:</h3>
+
+    <p>
+        Any SVFL owner who starts a QB who does not have at least one pass attempt that week will get credit for the other quarterback on his roster.  If that owner has more than two QBs they must identify who the back-up will be when he submits his starting line-up.  If a back-up is not designated the lowest scoring of the available QBs will be used.   This rule is not in effect for owners with the QB Option.
+    </p>
+</section>
+
+<section>
+    <h3>League Standings:</h3>
+
+    <p>
+        Each week every SVFL team’s starting line-up’s points are totaled and added to their season’s total.  All of the teams’ season totals are averaged.  This average becomes the break-even point.  All teams above this average are making money and all teams below the average are losing money.
+    </p>
+    <p class="ex2">
+        <b>Example:</b> if the league average is $200 and you are at $220, you are ahead $20 for the season.  If your point total is 190, you are down $10 for the season.
+    </p>
+    <p>
+        No money is paid until the week of Super Bowl.  The most any owner can lose in a season is $100.  Any owner over $100 negative at the end of the season will have points added to their score to bring their losses down to $100.
+    </p>
+</section>
+
+<section>
+    <h3>Roster Changes:</h3>
+
+    <h4 class="ex1">Roster Moves</h4>
+    <p class="ex2">
+        Owners wishing to make a roster change can call or email any time after the last game of the week and before the start of the 1st weekend game of the next week to add players.
+    </p>
+
+    <p class="ex2">
+        Moves are allowed after the Thursday game at the same cost of the move if it was made before the Thursday game and do not change the owner’s status as to being positive or negative for the week.
+    </p>
+
+    <p class="ex2">
+        Any moves after the Thursday game cannot involve any players who played on Thursday.
+    </p>
+
+    <h4 class="ex1">Cost of Moves</h4>
+
+    <p class="ex2">
+        Any owner who is positive in the standings will have 6 points taken off their score for each change.
+    </p>
+
+    <p class="ex2">
+        Owner who are negative in the standings, a change will cost 3 points.
+    </p>
+
+    <p class="ex2">
+        Owners who are $50 or more negative, moves costs 1 point.
+    </p>
+
+    <p class="ex2">
+        Owners who are $100 or more negative gets free moves.
+    </p>
+
+    <p class="ex2">
+        If multiple owners try to add the same player within 24 hours after the last game of the week or within 24 hours of the player being dropped, the owner(s) lowest in the standings gets the player but cannot trade the player for two weeks.
+    </p>
+
+    <h4 class="ex1">Trades</h4>
+    <p class="ex2">
+        Trades are free.
+    </p>
+    <p class="ex2">
+        Any SVFL owner who trades a player, cannot reacquire that player for 4 weeks.   Moves will not be announced until they are official.
+    </p>
+</section>
+
+<section>
+    <h3>Supplementary Draft:</h3>
+
+    <p>
+        Every four weeks on the Wednesdays after weeks' four, eight and twelve of the NFL season there is a free draft for anyone wishing to pick-up available players.  The drafting order is reverse of the league standings at that time.  Thus if you are in last place you will draft first in each round. The location of these drafts will be determined at the initial draft.  This is not a mandatory draft but a lot of trading goes on at these drafts and a lot of players are dropped, and are not subject to the 24 hour rule.  There will be no paid moves during the draft.  Any player dropped during a round of the draft is not available until the start of the next round.
+    </p>
+</section>
+
+<section>
+    <h3>Play-Offs:</h3>
+
+    <p>
+        At the end of the NFL regular season, the top SVFL teams make the SVFL play-offs.  For every two teams in the SVFL, there is one Play-off team, with a minimum of four teams and a maximum of eight. The highest scoring SVFL owner in the regular season is the 1st seed in the play-offs and through the rest of the play-offs.
+    </p>
+    <p>
+        The SVFL Play-offs start by owners dropping players not on play-off teams and players not on their roster since week 13.  There is a draft of remaining players with the highest seeded owner drafting 1st in every round.  The draft continues until all teams have 13 players.  In the round after all teams have 13 players, owners may draft a 13th player.  When there are four SVFL Play-off teams each NFL player can be owned once.  When there are more than four SVFL Play-off teams, each player can be owned twice.  When there are five or six SVFL Play-off teams, teams can have 2 players in common.  When there are seven or eight SVFL Play-off teams, teams can have 3 players in common.  An exception to this is when 2 teams enter the play-offs with more then the allowed number of players in common. Those two teams are then allowed to keep those players .
+    </p>
+    <p>
+        At the start of the Play-offs all of the SVFL teams start with zero.  All points scored during the play-offs are just points and not dollars.  Owners turn in their line-ups before each week of the play-offs.  The “QB Option” rule is automatic during the play-offs and does not take a roster position.  Adding of players outside of drafts are free when done between a draft and the next round of play-offs.  Moves between Week 1 and Week 2 of the Play-offs cost 6 points.  Paid moves are not allowed between the end of the regular season and the draft, Play-off Week 2 and the draft and Play-off Week 3 and the draft.  All other scoring rules remain the same as during the regular season.
+    </p>
+    <p>
+        There is a draft after the second week of the Play-offs with the number 1 seed drafting first.  At this draft, owners can only draft a starting line-up. Owners have to drop or trade extra players (ex: 2 kickers) before the draft.  At no time during the draft can an owner carry more than a starting line worth at any position.
+    </p>
+    <p>
+        After the Conference Finals, the top two SVFL teams from the Play-offs make the Super Bowl!  The two teams draft players from the NFL Super Bowl teams until both owners fill their rosters.  Each can have one QB, kicker and Defense.  The only common players the two teams can have are those they had in common during the Play-offs.  The two owners turn in their line-ups before the Super Bowl to the commissioner  The owner who emerges with the most points scored through out the whole Play-offs is the League Champion.
+    </p>
+</section>
+
+<section>
+    <h3>Pay-offs:</h3>
+
+    <p>
+        All SVFL teams that make the Play-offs get their original entry fee back (Minus the $2 Trophy fee),  plus any moneys won during the regular season.
+    </p>
+    <h4 class="ex1">Pay-off Brackets</h4>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-1">
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    <tr>
+                        <td>League Champion</td>
+                        <td>$200.00</td>
+                    </tr>
+                    <tr>
+                        <td>2<sup>nd</sup> Place</td>
+                        <td>$120.00</td>
+                    </tr>
+                    <tr>
+                        <td>3<sup>rd</sup> Place</td>
+                        <td>$80.00</td>
+                    </tr>
+                    <tr>
+                        <td>4<sup>th</sup> Place</td>
+                        <td>$60.00</td>
+                    </tr>
+                    <tr>
+                        <td>5<sup>th</sup> Place</td>
+                        <td>$50.00</td>
+                    </tr>
+                    <tr>
+                        <td>6<sup>th</sup> Place</td>
+                        <td>$40.00</td>
+                    </tr>
+                    <tr>
+                        <td>7<sup>th</sup> Place</td>
+                        <td>$30.00</td>
+                    </tr>
+                    <tr>
+                        <td>8<sup>th</sup> Place</td>
+                        <td>$20.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p>
+        (based on a 16 team league, totals may vary if +/- 16 teams).
+    </p>
+    <p>
+        All owners who ended the season negative need to have their money paid to the Treasurer by Super Bowl.
+    </p>
+</section>
+
+<section>
+    <h3>Tie Breakers:</h3>
+
+    <p>
+        Ties are won by the highest seeded owner.  During the regular season the highest seeded is the owner who drafted last in the first round of the first draft.  The owner who had the first pick is the lowest seed and loses all ties.   During the Play-offs the owner who finished first during the regular season is the highest seed in the play-offs.  A Super Bowl that ends in a tie will remain a tie and there will be two League Champions.
+    </p>
+</section>
+
+</div>
+
+<!-- *********************************************************************** -->
+
+  <!--  Include the Common Footer from the Partials Folder ---------  -->
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+<!-- End of Body  ---------------------------------------------------- -->
+
+</html>

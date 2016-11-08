@@ -8,8 +8,6 @@ var bcrypt = require('bcrypt');
 var _ = require('underscore');
 var jwt = require('jsonwebtoken');
 var cryptojs = require('crypto-js');
-var moment = require('moment');
-var now = moment();
 
 var exports = module.exports = {};
 
@@ -18,89 +16,6 @@ var exports = module.exports = {};
 // // Include the code to connect to a postgres database
 // var dbConnect = require('./db.js');
 //******CHANGED*******
-
-//----------------------------------------------------------------------------------
-// Write the drafted player into the owners roster table
-exports.addRoster = function(req){
-    console.log("*** user.addRoster  - ENTRY-POINT");
-
-    var ownerid = req.body.ownerid;
-    var addplayerId = req.body.addplayerId;
-
-    return new Promise(function (resolve, reject){
-
-        // var timestampmoment = moment.utc(message.timestamp);
-        var now = moment().format('MM/DD/YYYY HH:mm:ss Z');
-        // console.log("*** user.addRoster - MOMENT-now: " + now);
-        // console.log("*** user.addRoster - MOMENT-timestampmoment: " + timestampmoment);
-        // console.log("*** user.addRoster - MOMENT-timestampmoment Formatted: " + timestampmoment.local().format('h:mm a'));
-
-        var qry = 'INSERT INTO ff_owner_roster ';
-        //qry = qry + '(season_year, owner_id, player_id, roster_active, deactive_date, "createdAt", "updatedAt") ';
-        qry = qry + '(season_year, owner_id, player_id, roster_active, deactive_date) ';
-        //qry = qry + 'VALUES (($1::int), ($2::int), ($3::text), true, null, ($4::text), ($5::text)) RETURNING *';
-        qry = qry + 'VALUES (($1::int), ($2::int), ($3::text), true, null) RETURNING *';
-
-        console.log("*** user.addRoster - OWNER ID: " + ownerid);
-        console.log("*** user.addRoster - ADDPLAYERID: " + addplayerId);
-        console.log("*** user.addRoster - QUERY: " + qry);
-
-        //-----------   |SQL Statement-----------------------------|  |$1 variable|
-        //dbConnect.query('Insert INTO ff_owner_roster VALUES (DEFAULT, ($1), ($2), ($3)) RETURNING *', [hash, '09/26/2016 12:07:48 PDT', '09/26/2016 12:07:48 PDT'], function (err, rosterinstance) {
-        //dbConnect.query(qry, [2016, req.body.ownerid, req.body.addplayerId, now, now], function (err, rosterInstance) {
-        dbConnect.query(qry, [2016, req.body.ownerid, req.body.addplayerId], function (err, rosterInstance) {
-            console.log("*** user.addRoster - QUERY-EXIT-POINT");
-            resolve(rosterInstance);
-        }, function(err){
-            console.log("*** user.addRoster 005 - INSERT error: " + err);
-            reject();
-        });
-    });
-};
-
-//----------------------------------------------------------------------------------
-// Write the drafted player into the owners roster table
-exports.getRosterByOwner = function(ownerId){
-    console.log("*** user.getRosterByOwner  - ENTRY-POINT");
-    console.log("*** user.getRosterByOwner  - OWNERID: " + ownerId);
-
-    return new Promise(function (resolve, reject){
-
-        var qry = 'SELECT p.full_name, p.team, p.position, p.status, ';
-        qry = qry + 'CASE WHEN p.position=\'FB\' THEN \'RB\' ';
-        qry = qry + 'WHEN p.position=\'RB\' THEN \'RB\' ';
-        qry = qry + 'WHEN p.position=\'TE\' THEN \'RC\' ';
-        qry = qry + 'WHEN p.position=\'WR\' THEN \'RC\' ';
-        qry = qry + 'WHEN p.position=\'QB\' THEN \'QB\' ';
-        qry = qry + 'WHEN p.position=\'K\' THEN \'K\' ';
-        qry = qry + 'END as category ';
-        qry = qry + 'FROM ff_owner_roster r ';
-        qry = qry + 'INNER JOIN player p ON r.player_id = p.player_id ';
-        qry = qry + 'WHERE owner_id = ($1::int) '
-
-        qry = qry + 'UNION ';
-        qry = qry + 'SELECT t.city || \' \' || t.name AS full_name, ';
-        qry = qry + 't.team_id AS team, ';
-        qry = qry + '\'UNK\' AS position, ';
-        qry = qry + '\'Active\' AS status, ';
-        qry = qry + '\'DEF\' as category ';
-        qry = qry + 'FROM ff_owner_roster r ';
-        qry = qry + 'INNER JOIN team t ON r.player_id = t.team_id ';
-        qry = qry + 'WHERE owner_id = ($1::int)';
-
-//        var qry = 'SELECT * FROM ff_owner_roster WHERE owner_id = ($1::int)';
-
-        //-----------   |SQL Statement-----------------------------|  |$1 variable|
-        dbConnect.query(qry, [ownerId], function (err, ownerRoster) {
-            console.log("*** user.getRosterByOwner - QUERY-EXIT-POINT");
-            console.log("*** user.getRosterByOwner - OWNERROSTER COUNT: " + ownerRoster.rowCount);
-            resolve(ownerRoster);
-        }, function(err){
-            console.log("*** user.getRosterByOwner 005 - INSERT error: " + err);
-            reject();
-        });
-    });
-};
 
 
 //----------------------------------------------------------------------------------

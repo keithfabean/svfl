@@ -9,39 +9,6 @@
      include ../public/css/svfl.css
   -->
 
-    <!-- Start of STYLE for Navigation Bar  ----------------------------- -->
-    <style>
-      ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-      }
-
-      li {
-      float: left;
-      }
-
-      li a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      }
-
-      a:hover:not(.active) {
-      background-color: #111;
-      }
-
-      .active {
-      <!-- background-color:grey; -->
-      }
-    </style>
-    <!-- #4CAF50 -->
-    <!-- End of STYLE for Navigation Bar  ----------------------------- -->
-
     <!-- -----  This stuff is needed for the Dynamic Tab  -------------------- -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,6 +16,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- -----  This stuff is needed for the Dynamic Tab  -------------------- -->
+
+    <style>
+    .scrollable {
+    height: 500px; /* or any value */
+    overflow-y: auto;
+    }
+    .scrollable-short {
+    height: 400px; /* or any value */
+    overflow-y: auto;
+    }
+    .scrollable-Long {
+    height: 600px; /* or any value */
+    overflow-y: auto;
+    }
+</style>
 
 </head>
 <!-- End of HEAD  ---------------------------------------------------- -->
@@ -59,6 +41,42 @@
         <!-- Include the Navagation bar on the page  ------------------------- -->
         <% include ../partials/header %>
     </header>
+
+    <!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+    <style>
+    ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    }
+
+    li {
+    float: left;
+    }
+
+    li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    }
+
+    a:hover:not(.active) {
+    background-color: #111;
+    }
+
+    .active {
+    background-color: grey;
+    }
+    </style>
+<!--    background-color:#4CAF50; -->
+
+    <!-- End of STYLE for Navigation Bar  ----------------------------- -->
+
+
     <!--
     <div>
     <center>
@@ -66,9 +84,9 @@
 </center>
 </div>
 -->
-<div class="container">
+<div class="container-fluid">
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-sm-7">
         <!--   DYNAMIC TABS  -----------------------------------------  -->
         <!-- <div class="container"> -->
             <h2>Player Draft</h2>
@@ -86,8 +104,8 @@
             <div class="tab-content">
                 <!-- <h3>Quarterbacks</h3>  -->
                 <div id="QB" class="tab-pane fade in active">
-                    <div>
-                        <table id="tbQuarterback" class="table" border="1">
+                    <div class="scrollable">
+                        <table id="tbQuarterback" class="table table-striped table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>Player</th>
@@ -127,7 +145,7 @@
                                             <%= %>
                                         </td>
                                         <td>
-                                            <button type="submit" name="addplayerId" value="<%= qbList.rows[i].player_id%>" background-color="#4CAF50">
+                                            <button type="submit" class="btn btn-xs btn-success" name="addplayerId" value="<%= qbList.rows[i].player_id%>">
                                                 Draft
                                             </button>
                                         </td>
@@ -141,8 +159,8 @@
                 </div>
                 <div id="RB" class="tab-pane fade">
                     <!-- <h3>Running Backs</h3> -->
-                    <div>
-                        <table id="tbRunningback" class="table" border="1">
+                    <div class="scrollable">
+                        <table id="tbRunningback" class="table table-striped table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>Player</th>
@@ -182,7 +200,7 @@
                                             <%= %>
                                         </td>
                                         <td>
-                                            <button type="submit" name="addplayerId" value="<%= rbList.rows[i].player_id%>" background-color="#4CAF50">
+                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= rbList.rows[i].player_id%>">
                                                 Draft
                                             </button>
                                         </td>
@@ -196,8 +214,8 @@
                 </div>
                 <div id="RC" class="tab-pane fade">
                     <!-- <h3>Revievers</h3> -->
-                    <div>
-                        <table id="tbReceivers" class="table" border="1">
+                    <div class="scrollable">
+                        <table id="tbReceivers" class="table table-striped table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>Player</th>
@@ -237,7 +255,7 @@
                                             <%= %>
                                         </td>
                                         <td>
-                                            <button type="submit" name="addplayerId" value="<%= rcList.rows[i].player_id%>" background-color="#4CAF50">
+                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= rcList.rows[i].player_id%>">
                                                 Draft
                                             </button>
                                         </td>
@@ -251,8 +269,8 @@
                 </div>
                 <div id="Kick" class="tab-pane fade">
                     <!-- <h3>Kickers</h3> -->
-                    <div>
-                        <table id="tbKicker" class="table" border="1">
+                    <div class="scrollable">
+                        <table id="tbKicker" class="table table-striped table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>Player</th>
@@ -292,7 +310,7 @@
                                             <%= %>
                                         </td>
                                         <td>
-                                            <button type="submit" name="addplayerId" value="<%= kickerList.rows[i].player_id%>" background-color="#4CAF50">
+                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= kickerList.rows[i].player_id%>">
                                                 Draft
                                             </button>
                                         </td>
@@ -306,8 +324,8 @@
                 </div>
                 <div id="DEF" class="tab-pane fade">
                     <!-- <h3>Defence</h3> -->
-                    <div>
-                        <table id="tbKicker" class="table" border="1">
+                    <div class="scrollable">
+                        <table id="tbKicker" class="table table-striped table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>Player</th>
@@ -347,7 +365,7 @@
                                             <%= %>
                                         </td>
                                         <td>
-                                            <button type="submit" name="addplayerId" value="<%= defList.rows[i].player_id%>" background-color="#4CAF50">
+                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= defList.rows[i].player_id%>">
                                                 Draft
                                             </button>
                                         </td>
@@ -369,50 +387,52 @@
 
 
     <!--   Roster Table List  -----------------------------------------  -->
-    <div class="col-md-4 col-md-offset-1">
+    <div class="col-sm-4 col-sm-offset-1">
         <h2>Roster</h2>
-        <table id="tbRoster" class="table table-striped" border="1">
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Team</th>
-                    <th>Position</th>
-                    <th>Category</th>
-                    <th>Status</th>
-                    <th>Drop</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                console.log("*** draft.ejs - OWNER ROSTER length: " + roster.rows.length);
-                for (var i=0; i < roster.rows.length; i++) {
+        <div class="scrollable-long">
+            <table id="tbRoster" class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Team</th>
+                        <th>Position</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Drop</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                    console.log("*** draft.ejs - OWNER ROSTER length: " + roster.rows.length);
+                    for (var i=0; i < roster.rows.length; i++) {
+                        %>
+                        <tr>
+                            <td>
+                                <%= roster.rows[i].full_name%>
+                            </td>
+                            <td>
+                                <%= roster.rows[i].team%>
+                            </td>
+                            <td>
+                                <%= roster.rows[i].position%>
+                            </td>
+                            <td>
+                                <%= roster.rows[i].category%>
+                            </td>
+                            <td>
+                                <%= roster.rows[i].status%>
+                            </td>
+                            <td>Action?</td>
+                        </tr>
+                        <%
+                    }   //close the for loop
                     %>
-                <tr>
-                    <td>
-                        <%= roster.rows[i].full_name%>
-                    </td>
-                    <td>
-                        <%= roster.rows[i].team%>
-                    </td>
-                    <td>
-                        <%= roster.rows[i].position%>
-                    </td>
-                    <td>
-                        <%= roster.rows[i].category%>
-                    </td>
-                    <td>
-                        <%= roster.rows[i].status%>
-                    </td>
-                    <td>Action button?</td>
-                </tr>
-                <%
-                }   //close the for loop
-                %>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
 
     </div>  <!-- END div class="col-md-4"   -->
-    <!--   Roster Table List  -----------------------------------------  -->
+    <!--   END Roster Table List  -----------------------------------------  -->
 </div>  <!-- END div class="row"    -->
 </div>  <!-- END div class="container" -->
 
