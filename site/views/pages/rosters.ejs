@@ -32,6 +32,60 @@
     <% include ../partials/header %>
   </header>
 
+  <!--   Roster Table List  -----------------------------------------  -->
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-sm-4 col-sm-offset-1">
+              <h2>Roster</h2>
+              <div class="scrollable-long">
+                  <table id="tbRoster" class="table table-striped table-bordered table-condensed">
+                      <thead>
+                          <tr>
+                              <th>Owner</th>
+                              <th>Player</th>
+                              <th>Team</th>
+                              <th>Position</th>
+                              <th>Category</th>
+                              <th>Status</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <%
+                          console.log("*** draft.ejs - OWNER ROSTER length: " + roster.rows.length);
+                          for (var i=0; i < roster.rows.length; i++) {
+                              %>
+                              <tr>
+                                  <td>
+                                      <%= roster.rows[i].owner_name%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].full_name%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].team%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].position%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].category%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].status%>
+                                  </td>
+                              </tr>
+                              <%
+                          }   //close the for loop
+                          %>
+                      </tbody>
+                  </table>
+              </div>
+
+          </div>  <!-- END div class="col-md-4"   -->
+          <!--   END Roster Table List  -----------------------------------------  -->
+      </div>  <!-- END div class="row"    -->
+  </div>  <!-- END div class="container" -->
+
   <!--  Include the Common Footer from the Partials Folder ---------  -->
   <footer>
     <% include ../partials/footer %>

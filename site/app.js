@@ -372,7 +372,21 @@ app.post('/register', function(req, res){
 app.get('/rosters', middleware.requireAuthentication, function(req, res){
     console.log('*** app.get/rosters - *** ENTRY POINT');
 
-    res.render('pages/rosters', {titleText: 'SVFL Rosters', games: twGames, owner: gOwner});
+    gOwner = req.user
+    ownerId = gOwner.rows[0].owner_id;
+
+    main.getRosters(req, res).then(function(ownerRoster){
+        console.log('*** app.get/rosters - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
+
+        res.render('pages/rosters', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner, roster: ownerRoster});
+
+    }).catch(function(err) {
+        console.log("*** app.get/rosters *** - ERROR EXIT-POINT");
+        console.log(err);
+        //res.status(500).send();
+    });
+
+    //res.render('pages/rosters', {titleText: 'SVFL Rosters', games: twGames, owner: gOwner});
 
 });
 

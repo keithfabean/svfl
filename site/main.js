@@ -11,6 +11,8 @@ var exports = module.exports = {};
 
 //----------------------------------------------------------------------------------
 // Write the drafted player into the owners roster table
+//----------------------------------------------------------------------------------
+
 exports.addRoster = function(req){
     console.log("*** user.addRoster  - ENTRY-POINT");
 
@@ -50,13 +52,15 @@ exports.addRoster = function(req){
 
 //----------------------------------------------------------------------------------
 // Write the drafted player into the owners roster table
-exports.getRosterByOwner = function(ownerId){
-    console.log("*** user.getRosterByOwner  - ENTRY-POINT");
-    console.log("*** user.getRosterByOwner  - OWNERID: " + ownerId);
+//----------------------------------------------------------------------------------
+
+exports.getRosters = function(req, res){
+    console.log("*** user.getRosters  - ENTRY-POINT");
 
     return new Promise(function (resolve, reject){
 
-        var qry = 'SELECT r.owner_id, r.player_id, p.full_name, p.team, p.position, p.status, ';
+        var qry = 'SELECT r.owner_id, o.first_name || \' \' || o.last_name || \' \' || o.suffix AS owner_name, ';
+        qry = qry + 'r.player_id, p.full_name, p.team, p.position, p.status, ';
         qry = qry + 'CASE WHEN p.position=\'FB\' THEN \'RB\' ';
         qry = qry + 'WHEN p.position=\'RB\' THEN \'RB\' ';
         qry = qry + 'WHEN p.position=\'TE\' THEN \'RC\' ';
@@ -72,21 +76,86 @@ exports.getRosterByOwner = function(ownerId){
         qry = qry + 'WHEN p.position=\'K\' THEN \'4\' ';
         qry = qry + 'END AS sortorder ';
         qry = qry + 'FROM ff_owner_roster r ';
+        qry = qry + 'INNER JOIN ff_owners o ON r.owner_id = o.id ';
         qry = qry + 'INNER JOIN player p ON r.player_id = p.player_id ';
-        qry = qry + 'WHERE owner_id = ($1::int) '
+        qry = qry + 'INNER JOIN meta m ON r.season_year = m.season_year ';
+        //qry = qry + 'WHERE owner_id = ($1::int) '
 
         qry = qry + 'UNION ';
-        qry = qry + 'SELECT r.owner_id, r.player_id, '
-        qry = qry + 't.city || \' \' || t.name AS full_name, ';
+        qry = qry + 'SELECT r.owner_id, o.first_name || \' \' || o.last_name || \' \' || o.suffix AS owner_name, '
+        qry = qry + 'r.player_id, t.city || \' \' || t.name AS full_name, ';
         qry = qry + 't.team_id AS team, ';
         qry = qry + '\'UNK\' AS position, ';
         qry = qry + '\'Active\' AS status, ';
         qry = qry + '\'DEF\' as category, ';
         qry = qry + '\'5\'';
         qry = qry + 'FROM ff_owner_roster r ';
+        qry = qry + 'INNER JOIN ff_owners o ON r.owner_id = o.id ';
         qry = qry + 'INNER JOIN team t ON r.player_id = t.team_id ';
+        qry = qry + 'INNER JOIN meta m ON r.season_year = m.season_year ';
+        //qry = qry + 'WHERE owner_id = ($1::int)';
+        qry = qry + 'ORDER BY 2, 9, 6 DESC, 4';
+
+//        var qry = 'SELECT * FROM ff_owner_roster WHERE owner_id = ($1::int)';
+
+        //-----------   |SQL Statement-----------------------------|  |$1 variable|
+        dbConnect.query(qry, [], function (err, ownerRoster) {
+            console.log("*** user.getRosters - QUERY-EXIT-POINT");
+            console.log("*** user.getRosters - OWNERROSTER COUNT: " + ownerRoster.rowCount);
+            resolve(ownerRoster);
+        }, function(err){
+            console.log("*** user.getRosters *** - SELECT error: " + err);
+            reject();
+        });
+    });
+};
+
+//----------------------------------------------------------------------------------
+// Write the drafted player into the owners roster table
+//----------------------------------------------------------------------------------
+
+exports.getRosterByOwner = function(ownerId){
+    console.log("*** user.getRosterByOwner  - ENTRY-POINT");
+    console.log("*** user.getRosterByOwner  - OWNERID: " + ownerId);
+
+    return new Promise(function (resolve, reject){
+
+        var qry = 'SELECT r.owner_id, o.first_name || \' \' || o.last_name || \' \' || o.suffix AS owner_name, ';
+        qry = qry + 'r.player_id, p.full_name, p.team, p.position, p.status, ';
+        qry = qry + 'CASE WHEN p.position=\'FB\' THEN \'RB\' ';
+        qry = qry + 'WHEN p.position=\'RB\' THEN \'RB\' ';
+        qry = qry + 'WHEN p.position=\'TE\' THEN \'RC\' ';
+        qry = qry + 'WHEN p.position=\'WR\' THEN \'RC\' ';
+        qry = qry + 'WHEN p.position=\'QB\' THEN \'QB\' ';
+        qry = qry + 'WHEN p.position=\'K\' THEN \'K\' ';
+        qry = qry + 'END as category, ';
+        qry = qry + 'CASE WHEN p.position=\'FB\' THEN \'2\' ';
+        qry = qry + 'WHEN p.position=\'RB\' THEN \'2\' ';
+        qry = qry + 'WHEN p.position=\'TE\' THEN \'3\' ';
+        qry = qry + 'WHEN p.position=\'WR\' THEN \'3\' ';
+        qry = qry + 'WHEN p.position=\'QB\' THEN \'1\' ';
+        qry = qry + 'WHEN p.position=\'K\' THEN \'4\' ';
+        qry = qry + 'END AS sortorder ';
+        qry = qry + 'FROM ff_owner_roster r ';
+        qry = qry + 'INNER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'INNER JOIN player p ON r.player_id = p.player_id ';
+        qry = qry + 'INNER JOIN meta m ON m.season_year = r.season_year ';
+        qry = qry + 'WHERE owner_id = ($1::int) '
+
+        qry = qry + 'UNION ';
+        qry = qry + 'SELECT r.owner_id, o.first_name || \' \' || o.last_name || \' \' || o.suffix AS owner_name, '
+        qry = qry + 'r.player_id, t.city || \' \' || t.name AS full_name, ';
+        qry = qry + 't.team_id AS team, ';
+        qry = qry + '\'UNK\' AS position, ';
+        qry = qry + '\'Active\' AS status, ';
+        qry = qry + '\'DEF\' as category, ';
+        qry = qry + '\'5\'';
+        qry = qry + 'FROM ff_owner_roster r ';
+        qry = qry + 'INNER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'INNER JOIN team t ON r.player_id = t.team_id ';
+        qry = qry + 'INNER JOIN meta m ON m.season_year = r.season_year ';
         qry = qry + 'WHERE owner_id = ($1::int)';
-        qry = qry + 'ORDER BY 8, 5 DESC, 3';
+        qry = qry + 'ORDER BY 9, 6 DESC, 4';
 
 //        var qry = 'SELECT * FROM ff_owner_roster WHERE owner_id = ($1::int)';
 
@@ -96,7 +165,7 @@ exports.getRosterByOwner = function(ownerId){
             console.log("*** user.getRosterByOwner - OWNERROSTER COUNT: " + ownerRoster.rowCount);
             resolve(ownerRoster);
         }, function(err){
-            console.log("*** user.getRosterByOwner 005 - INSERT error: " + err);
+            console.log("*** user.getRosterByOwner *** - SELECT error: " + err);
             reject();
         });
     });
@@ -104,6 +173,8 @@ exports.getRosterByOwner = function(ownerId){
 
 //----------------------------------------------------------------------------------
 // Retrieve the current Standings for all owners
+//----------------------------------------------------------------------------------
+
 exports.getStandings = function(request, response, callback) {
     console.log("*** main.getStandings 001 - GETSTANDINGS - ENTRY-POINT");
 
