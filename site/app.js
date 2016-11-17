@@ -264,28 +264,18 @@ app.get('/lineup', middleware.requireAuthentication, function(req, res){
 app.post('/lineup', middleware.requireAuthentication, function(req, res){
     console.log('*** app.post/lineup - *** ENTRY POINT');
 
-    console.log("*** app.post/lineup *** - Request.Body.Ownerid" + req.body.ownerid);
-    console.log("*** app.post/lineup *** - Request.Body.AddPlayerId" + req.body.addplayerId);
+    console.log("*** app.post/lineup *** - Request.Body: ");
+    console.log(req.body);
 
-    user.createLineup(req).then(function(rosterItem){
-        console.log('*** app.post/lineup - *** ROSTERITEM Count: ' + rosterItem.rowCount);
+    // user.createLineup(req).then(function(rosterItem){
+    //     console.log('*** app.post/lineup - *** ROSTERITEM Count: ' + rosterItem.rowCount);
         res.redirect('/lineup');
 
-    }, function(err) {
-        console.log("*** app.post/lineup *** - ERROR EXIT-POINT");
-        console.log(err);
-        //res.status(500).send();
-    });
-
-});
-
-//----------------------------------------------------------------------------------------------
-// This is route request for
-//----------------------------------------------------------------------------------------------
-
-app.get('/moves', middleware.requireAuthentication, function(req, res){
-
-    res.render('pages/moves', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner});
+    // }, function(err) {
+    //     console.log("*** app.post/lineup *** - ERROR EXIT-POINT");
+    //     console.log(err);
+    //     //res.status(500).send();
+    // });
 
 });
 
@@ -318,6 +308,16 @@ app.get('/logout', function(req, res) {
         //res.status(401).send('Could not authenticate.' + err);
         res.redirect('/signin');
     });
+});
+
+//----------------------------------------------------------------------------------------------
+// This is route request for
+//----------------------------------------------------------------------------------------------
+
+app.get('/moves', middleware.requireAuthentication, function(req, res){
+
+    res.render('pages/moves', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner});
+
 });
 
 //----------------------------------------------------------------------------------------------

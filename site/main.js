@@ -13,6 +13,48 @@ var exports = module.exports = {};
 // Write the drafted player into the owners roster table
 //----------------------------------------------------------------------------------
 
+exports.createLineup = function(req){
+    console.log("*** user.addRoster  - ENTRY-POINT");
+
+    var ownerid = req.body.ownerid;
+    var addplayerId = req.body.addplayerId;
+    var seasonYear = '2016'
+    var seasonType = req.body.lineup
+    var seasonWeek = '1'
+
+    return new Promise(function (resolve, reject){
+
+        // var timestampmoment = moment.utc(message.timestamp);
+        var now = moment().format('MM/DD/YYYY HH:mm:ss Z');
+        // console.log("*** user.addRoster - MOMENT-now: " + now);
+        // console.log("*** user.addRoster - MOMENT-timestampmoment: " + timestampmoment);
+        // console.log("*** user.addRoster - MOMENT-timestampmoment Formatted: " + timestampmoment.local().format('h:mm a'));
+
+        var qry = 'INSERT INTO ff_owner_lineup ';
+        qry = qry + '(season_year, season_type, week, lineup_type, owner_id, player_id, start, "createdAt", "updatedAt") ';
+        qry = qry + 'VALUES (($1::int), ($2::text), ($3::int), ($4::text), ($5::int), ($6::text), ($7::boolean), ($8::text), ($9::text)) RETURNING *';
+
+        console.log("*** user.addRoster - OWNER ID: " + ownerid);
+        console.log("*** user.addRoster - ADDPLAYERID: " + addplayerId);
+        console.log("*** user.addRoster - QUERY: " + qry);
+
+        //-----------   |SQL Statement-----------------------------|  |$1 variable|
+        //dbConnect.query('Insert INTO ff_owner_roster VALUES (DEFAULT, ($1), ($2), ($3)) RETURNING *', [hash, '09/26/2016 12:07:48 PDT', '09/26/2016 12:07:48 PDT'], function (err, rosterinstance) {
+        //dbConnect.query(qry, [2016, req.body.ownerid, req.body.addplayerId, now, now], function (err, rosterInstance) {
+        dbConnect.query(qry, [seasonYear, seasonType, seasonWeek, req.body.ownerid, req.body.addplayerId,], function (err, rosterInstance) {
+            console.log("*** user.addRoster - QUERY-EXIT-POINT");
+            resolve(rosterInstance);
+        }, function(err){
+            console.log("*** user.addRoster 005 - INSERT error: " + err);
+            reject();
+        });
+    });
+};
+
+//----------------------------------------------------------------------------------
+// Write the drafted player into the owners roster table
+//----------------------------------------------------------------------------------
+
 exports.addRoster = function(req){
     console.log("*** user.addRoster  - ENTRY-POINT");
 
@@ -30,7 +72,7 @@ exports.addRoster = function(req){
         var qry = 'INSERT INTO ff_owner_roster ';
         //qry = qry + '(season_year, owner_id, player_id, roster_active, deactive_date, "createdAt", "updatedAt") ';
         qry = qry + '(season_year, owner_id, player_id, roster_active, deactive_date) ';
-        //qry = qry + 'VALUES (($1::int), ($2::int), ($3::text), true, null, ($4::text), ($5::text)) RETURNING *';
+        //qry = qry + 'VALUES (($1::int), ($2::int), ($3::text), true, null, ($4::timestamptz), ($5::timestamptz)) RETURNING *';
         qry = qry + 'VALUES (($1::int), ($2::int), ($3::text), true, null) RETURNING *';
 
         console.log("*** user.addRoster - OWNER ID: " + ownerid);
@@ -51,7 +93,7 @@ exports.addRoster = function(req){
 };
 
 //----------------------------------------------------------------------------------
-// Write the drafted player into the owners roster table
+// Read the player into the owners roster table
 //----------------------------------------------------------------------------------
 
 exports.getRosters = function(req, res){
@@ -111,7 +153,7 @@ exports.getRosters = function(req, res){
 };
 
 //----------------------------------------------------------------------------------
-// Write the drafted player into the owners roster table
+// Read the players into the owners roster table
 //----------------------------------------------------------------------------------
 
 exports.getRosterByOwner = function(ownerId){
