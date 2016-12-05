@@ -66,27 +66,18 @@ exports.getPlayersForDraft = function(request, response) {
     var players = {};
     return new Promise(function (resolve, reject){
 
-        // SELECT p.gsis_name,
-        // 	   p.full_name,
-        // 	   p.position,
-        // 	   CASE WHEN p.position='FB' THEN 'RB'
-        //             WHEN p.position='RB' THEN 'RB'
-        //             WHEN p.position='TE' THEN 'RC'
-        //             WHEN p.position='WR' THEN 'RC'
-        //             WHEN p.position='QB' THEN 'QB'
-        //             WHEN p.position='K' THEN 'K'
-        //        END as category,
-        //
-        // 	   p.team,
-        // 	   p.status
-        // FROM player p
-        // WHERE p.position IN('QB', 'K', 'WR', 'TE', 'RB', 'FB')
-        // ORDER BY p.position, p.last_name
         // ----------  Quarterbacks  ---------
-        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'QB\' as category, p.team, p.status ';
-        qry = qry + 'FROM player p WHERE p.position = \'QB\' ORDER BY p.last_name';
+        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'QB\' as category, p.team, p.status, ';
+        qry = qry + 'array_to_string(array_agg(o.full_name), \', \') AS owner_names, ';
+        qry = qry + 'array_length(array_agg(o.full_name), 1) AS nbr_of_owners ';
+        qry = qry + 'FROM player p ';
+        qry = qry + 'LEFT OUTER JOIN ff_owner_roster r ON p.player_id = r.player_id ';
+        qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'WHERE p.position = \'QB\' ';
+        qry = qry + 'GROUP BY p.player_id, p.gsis_name, p.full_name, p.position, category, p.team, p.status, p.last_name ';
+        qry = qry + 'ORDER BY p.last_name';
 
-        console.log('*** nfldata.getPlayersForDraft - *** Execute QB query ');
+        // console.log('*** nfldata.getPlayersForDraft - *** Execute QB query ');
         // Read the Player into the collection
         dbConnect.query(qry, [], function (err, qBacks) {
             console.log('*** nfldata.getPlayersForDraft - *** QBACKS Count: ' + qBacks.rowCount);
@@ -99,10 +90,17 @@ exports.getPlayersForDraft = function(request, response) {
         });
 
         // ----------  Runningbacks  ---------
-        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'RB\' as category, p.team, p.status ';
-        qry = qry + 'FROM player p WHERE p.position IN(\'FB\', \'RB\') ORDER BY p.last_name';
+        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'RB\' as category, p.team, p.status, ';
+        qry = qry + 'array_to_string(array_agg(o.full_name), \', \') AS owner_names, ';
+        qry = qry + 'array_length(array_agg(o.full_name), 1) AS nbr_of_owners ';
+        qry = qry + 'FROM player p ';
+        qry = qry + 'LEFT OUTER JOIN ff_owner_roster r ON p.player_id = r.player_id ';
+        qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'WHERE p.position IN(\'FB\', \'RB\') ';
+        qry = qry + 'GROUP BY p.player_id, p.gsis_name, p.full_name, p.position, category, p.team, p.status, p.last_name ';
+        qry = qry + 'ORDER BY p.last_name';
 
-        console.log('*** nfldata.getPlayersForDraft - *** Execute RB query ');
+        // console.log('*** nfldata.getPlayersForDraft - *** Execute RB query ');
         // Read the Player into the collection
         dbConnect.query(qry, [], function (err, rBacks) {
             console.log('*** nfldata.getPlayersForDraft - *** RBACKs Count: ' + rBacks.rowCount);
@@ -115,10 +113,17 @@ exports.getPlayersForDraft = function(request, response) {
         });
 
         // ----------  Receivers  ---------
-        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'RC\' as category, p.team, p.status ';
-        qry = qry + 'FROM player p WHERE p.position IN(\'TE\', \'WR\') ORDER BY p.last_name';
+        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'RC\' as category, p.team, p.status, ';
+        qry = qry + 'array_to_string(array_agg(o.full_name), \', \') AS owner_names, ';
+        qry = qry + 'array_length(array_agg(o.full_name), 1) AS nbr_of_owners ';
+        qry = qry + 'FROM player p ';
+        qry = qry + 'LEFT OUTER JOIN ff_owner_roster r ON p.player_id = r.player_id ';
+        qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'WHERE p.position IN(\'TE\', \'WR\') ';
+        qry = qry + 'GROUP BY p.player_id, p.gsis_name, p.full_name, p.position, category, p.team, p.status, p.last_name ';
+        qry = qry + 'ORDER BY p.last_name';
 
-        console.log('*** nfldata.getPlayersForDraft - *** Execute RECEIVER query ');
+        // console.log('*** nfldata.getPlayersForDraft - *** Execute RECEIVER query ');
         // Read the Player into the collection
         dbConnect.query(qry, [], function (err, receivers) {
             console.log('*** nfldata.getPlayersForDraft - *** RECEIVERS Count: ' + receivers.rowCount);
@@ -131,10 +136,17 @@ exports.getPlayersForDraft = function(request, response) {
         });
 
         // ----------  Kickers  ---------
-        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'K\' as category, p.team, p.status ';
-        qry = qry + 'FROM player p WHERE p.position = \'K\' ORDER BY p.last_name';
+        var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'K\' as category, p.team, p.status, ';
+        qry = qry + 'array_to_string(array_agg(o.full_name), \', \') AS owner_names, ';
+        qry = qry + 'array_length(array_agg(o.full_name), 1) AS nbr_of_owners ';
+        qry = qry + 'FROM player p ';
+        qry = qry + 'LEFT OUTER JOIN ff_owner_roster r ON p.player_id = r.player_id ';
+        qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'WHERE p.position = \'K\' ';
+        qry = qry + 'GROUP BY p.player_id, p.gsis_name, p.full_name, p.position, category, p.team, p.status, p.last_name ';
+        qry = qry + 'ORDER BY p.last_name';
 
-        console.log('*** nfldata.getPlayersForDraft - *** Execute KICKER query ');
+        // console.log('*** nfldata.getPlayersForDraft - *** Execute KICKER query ');
         // Read the Player into the collection
         dbConnect.query(qry, [], function (err, kickers) {
             console.log('*** nfldata.getPlayersForDraft - *** KICKERS Count: ' + kickers.rowCount);
@@ -147,16 +159,20 @@ exports.getPlayersForDraft = function(request, response) {
         });
 
         // ----------  defense  ---------
-        // var qry = 'SELECT p.player_id, p.gsis_name, p.full_name, p.position, \'K\' as category, p.team, p.status ';
-        // qry = qry + 'FROM player p WHERE p.position = \'K\' ORDER BY p.last_name';
-
         var qry = 'SELECT t.team_id AS player_id, t.name AS gsis_name, ';
         qry = qry + 't.city || \' \' || t.name AS full_name, ';
         qry = qry + '\'UNK\' AS position, \'DEF\' as category, ';
-        qry = qry + 't.team_id AS team, \'Active\' AS status ';
-        qry = qry + 'FROM team t WHERE t.team_id != \'UNK\' ORDER BY t.team_id';
+        qry = qry + 't.team_id AS team, \'Active\' AS status, ';
+        qry = qry + 'array_to_string(array_agg(o.full_name), \', \') AS owner_names, ';
+        qry = qry + 'array_length(array_agg(o.full_name), 1) AS nbr_of_owners ';
+        qry = qry + 'FROM team t ';
+        qry = qry + 'LEFT OUTER JOIN ff_owner_roster r ON t.team_id = r.player_id ';
+        qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
+        qry = qry + 'WHERE t.team_id != \'UNK\' ';
+        qry = qry + 'GROUP BY player_id, gsis_name, full_name, position, category, team, status, t.team_id ';
+        qry = qry + 'ORDER BY t.team_id';
 
-        console.log('*** nfldata.getPlayersForDraft - *** Execute defense query ');
+        // console.log('*** nfldata.getPlayersForDraft - *** Execute defense query ');
         // Read the Player into the collection
         dbConnect.query(qry, [], function (err, defense) {
             console.log('*** nfldata.getPlayersForDraft - *** DEFENSE Count: ' + defense.rowCount);

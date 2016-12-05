@@ -75,8 +75,12 @@ setTimeout(function (){
     nfldata.getThisWeekGames(function(games) {
         console.log('*** app.js *** - Return from getThisWeekGames');
 
-        twGames = games
+        twGames = games;
+        gSeasonYear = games.rows[0].season_year;
+        gSeasonType = games.rows[0].season_type;
+        gSeasonWeek = games.rows[0].week;
 
+        console.log('*** app.js *** - getThisWeekGames SEASON INFO: ' + gSeasonYear + ', ' + gSeasonType + ', ' + gSeasonWeek);
         console.log('*** app.js *** - getThisWeekGames GAMES ROWCOUNT: ' + games.rowCount);
         console.log('*** app.js *** - getThisWeekGames twGames ROWCOUNT: ' + twGames.rowCount);
 
@@ -110,7 +114,9 @@ setTimeout(function (){
 app.get('/', function(req, res) {
     //console.log("*** app.get/home 001 - Logged In UserName: " + Parse.User.current().get('username'));
 
-    res.render('pages/home', {titleText: "SVFL Home", games: twGames, owner: gOwner });
+    //res.render('pages/home', {titleText: "SVFL Home", games: twGames, owner: gOwner });
+    res.redirect('/signin');
+
 });
 
 //----------------------------------------------------------------------------------------------
@@ -151,7 +157,7 @@ app.get('/draft', middleware.requireAuthentication, function(req, res) {
         playersList = players;
 
         ownerId = gOwner.rows[0].owner_id;
-        return main.getRosterByOwner(ownerId);
+        return main.getRosterByOwner(ownerId, true);
 
     }).then(function(ownerRoster){
         console.log('*** app.get/draft - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
@@ -176,10 +182,10 @@ app.get('/draft', middleware.requireAuthentication, function(req, res) {
 
 app.post('/draft', middleware.requireAuthentication, function(req, res) {
 
-    console.log("*** app.post/draft *** - Request.Body.Ownerid" + req.body.ownerid);
-    console.log("*** app.post/draft *** - Request.Body.AddPlayerId" + req.body.addplayerId);
+    console.log("*** app.post/draft *** - Request.Body.Ownerid: " + req.body.ownerid);
+    console.log("*** app.post/draft *** - Request.Body.AddPlayerId: " + req.body.addPlayerId);
 
-    main.addRoster(req).then(function(rosterItem){
+    main.addToRoster(req.body.ownerid, req.body.addPlayerId).then(function(rosterItem){
         console.log('*** app.post/draft - *** ROSTERITEM Count: ' + rosterItem.rowCount);
         res.redirect('/draft');
 
@@ -198,8 +204,9 @@ app.post('/draft', middleware.requireAuthentication, function(req, res) {
 //----------------------------------------------------------------------------------------------
 
 app.get('/home', function(req, res) {
-//		console.log("*** app.get/home 001 - Logged In UserName: " + Parse.User.current().get('username'));
-        res.render('pages/home', {titleText: 'SVFL Home', games: twGames, owner: gOwner});
+    //res.render('pages/home', {titleText: 'SVFL Home', games: twGames, owner: gOwner});
+    res.redirect('/signin');
+
 });
 
 //----------------------------------------------------------------------------------------------
@@ -244,7 +251,7 @@ app.get('/lineup', middleware.requireAuthentication, function(req, res){
     gOwner = req.user
     ownerId = gOwner.rows[0].owner_id;
 
-    main.getRosterByOwner(ownerId).then(function(ownerRoster){
+    main.getRosterByOwner(ownerId, true).then(function(ownerRoster){
         console.log('*** app.get/lineup - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
 
         res.render('pages/lineup', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner, roster: ownerRoster});
@@ -315,8 +322,51 @@ app.get('/logout', function(req, res) {
 //----------------------------------------------------------------------------------------------
 
 app.get('/moves', middleware.requireAuthentication, function(req, res){
+    console.log('*** app.get/moves - *** ENTRY POINT');
+    gOwner = req.user
 
-    res.render('pages/moves', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner});
+    nfldata.getPlayersForDraft(req, res).then(function(players){
+
+        // var qBacks = players.qb
+        // var kickers = players.kickers
+        playersList = players;
+
+        ownerId = gOwner.rows[0].owner_id;
+        return main.getRosterByOwner(ownerId, true);
+
+    }).then(function(ownerRoster){
+
+        res.render('pages/moves', {titleText: 'SVFL Moves', games: twGames, owner: gOwner, playerList: playersList, roster: ownerRoster});
+
+    }).catch(function(err) {
+//    }), function(err) {
+        console.log("*** app.get/moves *** - ERROR EXIT-POINT");
+        console.log(err);
+        //res.status(500).send();
+    });
+
+});
+
+//----------------------------------------------------------------------------------------------
+// This is route request for
+//----------------------------------------------------------------------------------------------
+
+app.post('/moves', middleware.requireAuthentication, function(req, res) {
+    console.log('*** app.post/moves - *** ENTRY POINT');
+
+    console.log("*** app.post/moves *** - Request.Body: ");
+    console.log(req.body);
+
+    main.processMoves(req).then(function(){
+    //     console.log('*** app.post/moves - *** ROSTERITEM Count: ' + rosterItem.rowCount);
+        //res.redirect('/moves');
+
+     }, function(err) {
+         console.log("*** app.post/moves *** - ERROR EXIT-POINT");
+         console.log(err);
+     });
+
+    res.redirect('/moves');
 
 });
 
@@ -375,18 +425,43 @@ app.get('/rosters', middleware.requireAuthentication, function(req, res){
     gOwner = req.user
     ownerId = gOwner.rows[0].owner_id;
 
-    main.getRosters(req, res).then(function(ownerRoster){
-        console.log('*** app.get/rosters - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
+    // main.getRosters(req, res).then(function(ownerRoster){
+    //     console.log('*** app.get/rosters - *** OWNERROSTER Count: ' + ownerRoster.rowCount);
+    //
+    //     res.render('pages/rosters', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner, roster: ownerRoster});
+    //
+    // }).catch(function(err) {
+    //     console.log("*** app.get/rosters *** - ERROR EXIT-POINT");
+    //     console.log(err);
+    //     //res.status(500).send();
+    // });
 
-        res.render('pages/rosters', {titleText: 'SVFL Line-Up', games: twGames, owner: gOwner, roster: ownerRoster});
+
+    main.getOwnedPlayerList(req, res).then(function(players){
+
+        var qBacks = players.qb
+        console.log('*** app.get/rosters - *** PLAYERS.QBACKS Count: ' + qBacks.rowCount);
+        var kickers = players.kickers
+        console.log('*** app.get/rosters - *** PLAYERS.KICKERS Count: ' + kickers.rowCount);
+        playersList = players;
+
+        // ownerId = gOwner.rows[0].owner_id;
+        return main.getRosters(req, res);
+
+    }).then(function(roster){
+        console.log('*** app.get/rosters - *** ROSTER Count: ' + roster.rowCount);
+
+        res.render('pages/rosters', {titleText: 'SVFL Rosters', games: twGames, owner: gOwner, playerList: playersList, roster: roster});
 
     }).catch(function(err) {
+//    }), function(err) {
         console.log("*** app.get/rosters *** - ERROR EXIT-POINT");
         console.log(err);
         //res.status(500).send();
     });
 
-    //res.render('pages/rosters', {titleText: 'SVFL Rosters', games: twGames, owner: gOwner});
+
+
 
 });
 

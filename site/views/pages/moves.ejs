@@ -14,28 +14,586 @@
      include ../public/css/svfl.css
   -->
 
+  <!-- -----  This stuff is needed for the Dynamic Tab  -------------------- -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!-- -----  This stuff is needed for the Dynamic Tab  -------------------- -->
+
+  <style>
+  .scrollable {
+  height: 500px; /* or any value */
+  overflow-y: auto;
+  }
+  .scrollable-short {
+  height: 400px; /* or any value */
+  overflow-y: auto;
+  }
+  .scrollable-Long {
+  height: 600px; /* or any value */
+  overflow-y: auto;
+  }
+</style>
+
 </head>
 <!-- End of HEAD  ---------------------------------------------------- -->
 
 <!-- Start of Body  ---------------------------------------------------- -->
 <body>
-<!--
-  <div>
-    <center>
-      <h1>SVFL About Page</h1
-    </center>
-  </div>
--->
 
   <header>
     <!-- Include the Navagation bar on the page  ------------------------- -->
     <% include ../partials/header %>
   </header>
 
+    <div>
+      <center>
+        <h1>Roster Moves</h1
+      </center>
+    </div>
+
+  <!-- Start of STYLE for Navigation Bar  ----------------------------- -->
+  <style>
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  }
+
+  li {
+  float: left;
+  }
+
+  li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  }
+
+  a:hover:not(.active) {
+  background-color: #111;
+  }
+
+  .active {
+  background-color: grey;
+  }
+  </style>
+<!--    background-color:#4CAF50; -->
+
+  <!-- End of STYLE for Navigation Bar  ----------------------------- -->
+
+  <div class="container-fluid">
+      <div class="row">
+
+          <!--   Roster Table List  -----------------------------------------  -->
+          <div class="col-sm-3">
+              <h2>Roster</h2>
+              <div class="scrollable-long">
+                  <table id="tbRoster" class="table table-striped table-bordered table-condensed">
+                      <thead>
+                          <tr>
+                              <th>Player</th>
+                              <th>Team</th>
+                              <th>Position</th>
+                              <th>Category</th>
+                              <th>Drop</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <%
+                          console.log("*** moves.ejs - OWNER ROSTER length: " + roster.rows.length);
+                          for (var i=0; i < roster.rows.length; i++) {
+                            %>
+                              <tr id="tbr-<%= roster.rows[i].owner_roster_id%>">
+                                  <td>
+                                      <%= roster.rows[i].full_name%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].team%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].position%>
+                                  </td>
+                                  <td>
+                                      <%= roster.rows[i].category%>
+                                  </td>
+                                  <td>
+                                      <button type="button" onclick="createRow(this, 'tbr-');" class="btn  btn-xs btn-success" name="dropRosterRowId" value="<%= roster.rows[i].owner_roster_id%>">
+                                          Drop
+                                      </button>
+                                  </td>
+                                </tr>
+                            <%
+                              }   //close the for loop
+                            %>
+                          </tbody>
+                      </table>
+                  </div>
+
+              </div>  <!-- END div class="col-md-4"   -->
+              <!--   END Roster Table List  -----------------------------------------  -->
+
+              <div class="col-sm-5">
+                  <!--   DYNAMIC TABS  -----------------------------------------  -->
+                  <!-- <div class="container"> -->
+                  <h2>Players</h2>
+                  <ul class="nav nav-tabs">
+                      <li class="active"><a data-toggle="tab" href="#QB">QB</a></li>
+                      <li><a data-toggle="tab" href="#RB">RB</a></li>
+                      <li><a data-toggle="tab" href="#RC">RC</a></li>
+                      <li><a data-toggle="tab" href="#Kick">Kick</a></li>
+                      <li><a data-toggle="tab" href="#DEF">DEF</a></li>
+                  </ul>
+
+                      <div class="tab-content">
+                          <!-- <h3>Quarterbacks</h3>  -->
+                          <div id="QB" class="tab-pane fade in active">
+                              <div class="scrollable">
+                                  <table id="tbQuarterback" class="table table-striped table-bordered table-condensed">
+                                      <thead>
+                                          <tr>
+                                              <th>Player</th>
+                                              <th>Team</th>
+                                              <th>Position</th>
+                                              <th>Status</th>
+                                              <th>Owned By</th>
+                                              <th>Add</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+
+                                          <%
+                                          var qbList = playerList.qb;
+                                          console.log("*** moves.ejs - PLAYER QB length: " + qbList.rows.length);
+                                          for (var i=0; i < qbList.rows.length; i++) {
+                                              %>
+
+                                              <tr id="tba-<%= qbList.rows[i].player_id%>">
+                                                  <td>
+                                                      <%= qbList.rows[i].full_name%>
+                                                  </td>
+                                                  <td>
+                                                      <%= qbList.rows[i].team%>
+                                                  </td>
+                                                  <td>
+                                                      <%= qbList.rows[i].position%>
+                                                  </td>
+                                                  <td>
+                                                      <%= qbList.rows[i].status%>
+                                                  </td>
+                                                  <td>
+                                                      <%= qbList.rows[i].owner_names%>
+                                                  </td>
+                                                  <td>
+                                                      <%
+                                                      if (qbList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                                          <button type="button" class="btn btn-xs btn-success" onclick="createRow(this, 'tba-');" name="addplayerId" value="<%= qbList.rows[i].player_id%>">
+                                                              Add
+                                                          </button>
+                                                      <%}
+                                                      %>
+                                                  </td>
+                                              </tr>
+                                              <%
+                                          }   //close the for loop
+                                          %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <div id="RB" class="tab-pane fade">
+                              <!-- <h3>Running Backs</h3> -->
+                              <div class="scrollable">
+                                  <table id="tbRunningback" class="table table-striped table-bordered table-condensed">
+                                      <thead>
+                                          <tr>
+                                              <th>Player</th>
+                                              <th>Team</th>
+                                              <th>Position</th>
+                                              <th>Status</th>
+                                              <th>Owned By</th>
+                                              <th>Add</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+
+                                          <%
+                                          var rbList = playerList.rb;
+                                          console.log("*** moves.ejs - PLAYER RB length: " + rbList.rows.length);
+                                          for (var i=0; i < rbList.rows.length; i++) {
+                                              %>
+
+                                              <tr id="tba-<%= rbList.rows[i].player_id%>">
+                                                  <td>
+                                                      <%= rbList.rows[i].full_name%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rbList.rows[i].team%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rbList.rows[i].position%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rbList.rows[i].status%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rbList.rows[i].owner_names%>
+                                                  </td>
+                                                  <td>
+                                                      <%
+                                                      if (rbList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                                      <button type="button" class="btn  btn-xs btn-success"  onclick="createRow(this, 'tba-');" name="addplayerId" value="<%= rbList.rows[i].player_id%>">
+                                                          Add
+                                                      </button>
+                                                      <%}
+                                                      %>
+                                                  </td>
+                                              </tr>
+                                              <%
+                                          }   //close the for loop
+                                          %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <div id="RC" class="tab-pane fade">
+                              <!-- <h3>Revievers</h3> -->
+                              <div class="scrollable">
+                                  <table id="tbReceivers" class="table table-striped table-bordered table-condensed">
+                                      <thead>
+                                          <tr>
+                                              <th>Player</th>
+                                              <th>Team</th>
+                                              <th>Position</th>
+                                              <th>Status</th>
+                                              <th>Owned By</th>
+                                              <th>Add</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+
+                                          <%
+                                          var rcList = playerList.rc;
+                                          console.log("*** moves.ejs - PLAYER RC length: " + rcList.rows.length);
+                                          for (var i=0; i < rcList.rows.length; i++) {
+                                              %>
+
+                                              <tr id="tba-<%= rcList.rows[i].player_id%>">
+                                                  <td>
+                                                      <%= rcList.rows[i].full_name%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rcList.rows[i].team%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rcList.rows[i].position%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rcList.rows[i].status%>
+                                                  </td>
+                                                  <td>
+                                                      <%= rcList.rows[i].owner_names%>
+                                                  </td>
+                                                  <td>
+                                                      <%
+                                                      if (rcList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                                      <button type="button" class="btn  btn-xs btn-success" onclick="createRow(this, 'tba-');" name="addplayerId" value="<%= rcList.rows[i].player_id%>">
+                                                          Add
+                                                      </button>
+                                                      <%}
+                                                      %>
+                                                  </td>
+                                              </tr>
+                                              <%
+                                          }   //close the for loop
+                                          %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <div id="Kick" class="tab-pane fade">
+                              <!-- <h3>Kickers</h3> -->
+                              <div class="scrollable">
+                                  <table id="tbKicker" class="table table-striped table-bordered table-condensed">
+                                      <thead>
+                                          <tr>
+                                              <th>Player</th>
+                                              <th>Team</th>
+                                              <th>Position</th>
+                                              <th>Status</th>
+                                              <th>Owned By</th>
+                                              <th>Add</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+
+                                          <%
+                                          var kickerList = playerList.kickers;
+                                          console.log("*** moves.ejs - PLAYER KICKER length: " + kickerList.rows.length);
+                                          for (var i=0; i < kickerList.rows.length; i++) {
+                                              %>
+
+                                              <tr id="tba-<%= kickerList.rows[i].player_id%>">
+                                                  <td>
+                                                      <%= kickerList.rows[i].full_name%>
+                                                  </td>
+                                                  <td>
+                                                      <%= kickerList.rows[i].team%>
+                                                  </td>
+                                                  <td>
+                                                      <%= kickerList.rows[i].position%>
+                                                  </td>
+                                                  <td>
+                                                      <%= kickerList.rows[i].status%>
+                                                  </td>
+                                                  <td>
+                                                      <%= kickerList.rows[i].owner_names%>
+                                                  </td>
+                                                  <td>
+                                                      <%
+                                                      if (kickerList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                                      <button type="button" class="btn  btn-xs btn-success" onclick="createRow(this, 'tba-');" name="addplayerId" value="<%= kickerList.rows[i].player_id%>">
+                                                          Add
+                                                      </button>
+                                                      <%}
+                                                      %>
+                                                  </td>
+                                              </tr>
+                                              <%
+                                          }   //close the for loop
+                                          %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                          <div id="DEF" class="tab-pane fade">
+                              <!-- <h3>Defence</h3> -->
+                              <div class="scrollable">
+                                  <table id="tdDefense" class="table table-striped table-bordered table-condensed">
+                                      <thead>
+                                          <tr>
+                                              <th>Player</th>
+                                              <th>Team</th>
+                                              <th>Position</th>
+                                              <th>Status</th>
+                                              <th>Owned By</th>
+                                              <th>Add</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+
+                                          <%
+                                          var defList = playerList.defense;
+                                          console.log("*** moves.ejs - PLAYER Defense length: " + defList.rows.length);
+                                          for (var i=0; i < defList.rows.length; i++) {
+                                              %>
+
+                                              <tr id="tba-<%= defList.rows[i].player_id%>">
+                                                  <td>
+                                                      <%= defList.rows[i].full_name%>
+                                                  </td>
+                                                  <td>
+                                                      <%= defList.rows[i].team%>
+                                                  </td>
+                                                  <td>
+                                                      <%= defList.rows[i].position%>
+                                                  </td>
+                                                  <td>
+                                                      <%= defList.rows[i].status%>
+                                                  </td>
+                                                  <td>
+                                                      <%= defList.rows[i].owner_names%>
+                                                  </td>
+                                                  <td>
+                                                      <%
+                                                      if (defList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                                      <button type="button" class="btn  btn-xs btn-success" onclick="createRow(this, 'tba-');" name="addplayerId" value="<%= defList.rows[i].player_id%>">
+                                                          Add
+                                                      </button>
+                                                      <%}
+                                                      %>
+                                                  </td>
+                                              </tr>
+                                              <%
+                                          }   //close the for loop
+                                          %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>  <!-- END div class="tab-content"  -->
+
+                  <!--  </div>  END div class="container" -->
+
+                  <!--   END DYNAMIC TABS  -----------------------------------------  -->
+              </div>  <!-- END Players   -->
+
+              <!--   Moves Table List  -----------------------------------------  -->
+              <div class="col-sm-4">
+                  <h2>Moves</h2>
+
+                  <form method="post" action="/moves">
+                      <input type="hidden" name="ownerid" value="<%= owner.rows[0].owner_id%>">
+
+
+                  <div class="scrollable-long">
+                      <table id="tbMoves" class="table table-striped table-bordered table-condensed">
+                          <thead>
+                              <tr>
+                                  <th>Player</th>
+                                  <th>Team</th>
+                                  <th>Position</th>
+                                  <th>Action</th>
+                                  <th>Cancel</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                      </table>
+                  </div>
+                  <button type="submit" class="btn btn-success" name="PlayerMoves" value="Submit">
+                      Submit
+                  </button>
+
+                  <!-- <input type="submit" class="btn btn-success" name="PlayerMoves" value="Submit" align"right">  -->
+
+              </form>
+
+              </div>  <!-- END div class="col-md-4"   -->
+              <!--   END Moves Table List  -----------------------------------------  -->
+
+
+          </div>  <!-- END div class="row"    -->
+      </div>  <!-- END div class="container" -->
+
+  <!--  ********************************************************* ---------  -->
+
   <!--  Include the Common Footer from the Partials Folder ---------  -->
   <footer>
     <% include ../partials/footer %>
   </footer>
+
+  <script>
+
+  function copyRosterItem(elementObj) {
+
+      //var i = elementObj.attributes.value.value;
+
+      // Get a reference to the table
+      var tableRef = document.getElementById('tbMoves');
+
+      // Find the index for the last row in the existing table
+      // rowIndex = tableRef.
+
+      // Insert a row in the table at row index as the first non-header row
+      var newRow   = tableRef.insertRow(1);
+
+      // Insert a cell in the row at index 0
+      var newCell  = newRow.insertCell(0);
+
+      // Append an object to the cell
+      //newCell.innerHTML = roster.rows[i].full_name;
+      newCell.innerHTML = elementObj.attributes.value.value;
+
+      // Insert a cell in the row at index 1
+      var newCell  = newRow.insertCell(1);
+
+      // Append an object to the cell
+      newCell.innerHTML = elementObj.attributes.name.value;
+
+      // Insert a cell in the row at index 2
+      var newCell  = newRow.insertCell(2);
+
+      // Append an object to the cell
+      newCell.innerHTML = "Pos";
+      //newCell.innerHTML = roster.rows.length
+
+      // Insert a cell in the row at index 3
+      var newCell  = newRow.insertCell(3);
+
+      // Append an object to the cell
+      newCell.innerHTML = "Cat";
+
+      // Insert a cell in the row at index 4
+      var newCell  = newRow.insertCell(4);
+
+      // Append an object to the cell
+      //newCell.appendChild(elementObj);
+      newcell.innerHTML='<input type="button" name="" value="Move" onclick="removeRow(this);" />';
+
+  }
+
+  function removeRow(elementObj, tbPrefix) {
+
+      //var table = document.getElementById("tbMoves"); // find table
+
+      var rowId = tbPrefix + elementObj.attributes.value.value;
+
+      //alert('rowId: ' + rowId);
+
+      var row = document.getElementById(rowId);
+      row.parentNode.removeChild(row);
+
+      //Figure out how to reenable the "Drop" button from the Roster table
+
+  }
+
+  function cloneRow(elementObj, tbPrefix) {
+
+      var rowId = tbPrefix + elementObj.attributes.value.value;
+      var row = document.getElementById(rowId); // find row to copy
+
+      var table = document.getElementById("tbMoves"); // find table to append to
+      var clone = row.cloneNode(true); // copy children too
+      clone.id = "tbm-" + elementObj.attributes.value.value; // change id or other attributes/contents
+      table.appendChild(clone); // add new row to end of table
+  }
+
+  function createRow(elementObj, tbPrefix) {
+
+      var rowId = tbPrefix + elementObj.attributes.value.value;
+      var row = document.getElementById(rowId); // find row to copy
+
+      var action = "Drop";
+      if (tbPrefix === "tba-"){
+          action = "Add";
+      }
+      var actionLC = action.toLowerCase();
+
+      // Create the new row and give it a unique ID
+      var newRow = document.createElement('tr'); // create row node
+      var newRowId = "tbm-" + elementObj.attributes.value.value;
+      newRow.setAttribute("id", newRowId, 0);
+
+      var col1 = document.createElement('td'); // create column node
+      var col2 = document.createElement('td'); // create second column node
+      var col3 = document.createElement('td'); // create second column node
+      var col4 = document.createElement('td'); // create second column node
+      var col5 = document.createElement('td'); // create second column node
+
+      newRow.appendChild(col1); // append column to row
+      newRow.appendChild(col2); // append column to row
+      newRow.appendChild(col3); // append column to row
+      newRow.appendChild(col4); // append column to row
+      newRow.appendChild(col5); // append column to row
+
+      col1.innerHTML = row.cells[0].innerHTML; // put data in first column
+      col2.innerHTML = row.cells[1].innerHTML; // put data in second column
+      col3.innerHTML = row.cells[2].innerHTML; // put data in third column
+      col4.innerHTML = action + '<input type="hidden" name="' + actionLC + 'PlayerId" value="' + elementObj.attributes.value.value + '"></input>'; // put data in forth column
+      col5.innerHTML = '<button type="button" class="btn  btn-xs btn-success" onclick="removeRow(this, \'tbm-\');" name="cancelplayerId" value="' + elementObj.attributes.value.value + '">Cancel</button>'; // put data in fifth column
+
+      var table = document.getElementById("tbMoves"); // find table to append to
+      table.appendChild(newRow); // append row to table
+  }
+
+  </script>
 
 </body>
 <!-- End of Body  ---------------------------------------------------- -->

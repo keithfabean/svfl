@@ -81,12 +81,12 @@
     <div>
     <center>
     <h1>SVFL Draft Page</h1
-</center>
-</div>
--->
+    </center>
+    </div>
+    -->
 <div class="container-fluid">
 <div class="row">
-    <div class="col-sm-7">
+    <div class="col-sm-6">
         <!--   DYNAMIC TABS  -----------------------------------------  -->
         <!-- <div class="container"> -->
             <h2>Player Draft</h2>
@@ -112,8 +112,7 @@
                                     <th>Team</th>
                                     <th>Position</th>
                                     <th>Status</th>
-                                    <th>Owner 1</th>
-                                    <th>Owner 2</th>
+                                    <th>Owned By</th>
                                     <th>Add</th>
                                 </tr>
                             </thead>
@@ -138,16 +137,17 @@
                                         <td>
                                             <%= qbList.rows[i].status%>
                                         </td>
-                                        <td>OPEN
-                                            <%= %>
-                                        </td>
-                                        <td>OPEN
-                                            <%= %>
+                                        <td>
+                                            <%= qbList.rows[i].owner_names%>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-xs btn-success" name="addplayerId" value="<%= qbList.rows[i].player_id%>">
+                                            <%
+                                            if (qbList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                            <button type="submit" class="btn btn-xs btn-success" name="addPlayerId" value="<%= qbList.rows[i].player_id%>">
                                                 Draft
                                             </button>
+                                            <%}
+                                            %>
                                         </td>
                                     </tr>
                                     <%
@@ -167,8 +167,7 @@
                                     <th>Team</th>
                                     <th>Position</th>
                                     <th>Status</th>
-                                    <th>Owner 1</th>
-                                    <th>Owner 2</th>
+                                    <th>Owned By</th>
                                     <th>Add</th>
                                 </tr>
                             </thead>
@@ -193,16 +192,17 @@
                                         <td>
                                             <%= rbList.rows[i].status%>
                                         </td>
-                                        <td>OPEN
-                                            <%= %>
-                                        </td>
-                                        <td>OPEN
-                                            <%= %>
+                                        <td>
+                                            <%= rbList.rows[i].owner_names%>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= rbList.rows[i].player_id%>">
+                                            <%
+                                            if (rbList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                            <button type="submit" class="btn btn-xs btn-success" name="addPlayerId" value="<%= rbList.rows[i].player_id%>">
                                                 Draft
                                             </button>
+                                            <%}
+                                            %>
                                         </td>
                                     </tr>
                                     <%
@@ -222,8 +222,7 @@
                                     <th>Team</th>
                                     <th>Position</th>
                                     <th>Status</th>
-                                    <th>Owner 1</th>
-                                    <th>Owner 2</th>
+                                    <th>Owned By</th>
                                     <th>Add</th>
                                 </tr>
                             </thead>
@@ -248,16 +247,17 @@
                                         <td>
                                             <%= rcList.rows[i].status%>
                                         </td>
-                                        <td>OPEN
-                                            <%= %>
-                                        </td>
-                                        <td>OPEN
-                                            <%= %>
+                                        <td>
+                                            <%= rcList.rows[i].owner_names%>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= rcList.rows[i].player_id%>">
+                                            <%
+                                            if (rcList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                            <button type="submit" class="btn btn-xs btn-success" name="addPlayerId" value="<%= rcList.rows[i].player_id%>">
                                                 Draft
                                             </button>
+                                            <%}
+                                            %>
                                         </td>
                                     </tr>
                                     <%
@@ -277,8 +277,7 @@
                                     <th>Team</th>
                                     <th>Position</th>
                                     <th>Status</th>
-                                    <th>Owner 1</th>
-                                    <th>Owner 2</th>
+                                    <th>Owned By</th>
                                     <th>Add</th>
                                 </tr>
                             </thead>
@@ -303,16 +302,17 @@
                                         <td>
                                             <%= kickerList.rows[i].status%>
                                         </td>
-                                        <td>OPEN
-                                            <%= %>
-                                        </td>
-                                        <td>OPEN
-                                            <%= %>
+                                        <td>
+                                            <%= kickerList.rows[i].owner_names%>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= kickerList.rows[i].player_id%>">
+                                            <%
+                                            if (kickerList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                            <button type="submit" class="btn btn-xs btn-success" name="addPlayerId" value="<%= kickerList.rows[i].player_id%>">
                                                 Draft
                                             </button>
+                                            <%}
+                                            %>
                                         </td>
                                     </tr>
                                     <%
@@ -325,15 +325,14 @@
                 <div id="DEF" class="tab-pane fade">
                     <!-- <h3>Defence</h3> -->
                     <div class="scrollable">
-                        <table id="tbKicker" class="table table-striped table-bordered table-condensed">
+                        <table id="tbDefense" class="table table-striped table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>Player</th>
                                     <th>Team</th>
                                     <th>Position</th>
                                     <th>Status</th>
-                                    <th>Owner 1</th>
-                                    <th>Owner 2</th>
+                                    <th>Owned By</th>
                                     <th>Add</th>
                                 </tr>
                             </thead>
@@ -358,16 +357,17 @@
                                         <td>
                                             <%= defList.rows[i].status%>
                                         </td>
-                                        <td>OPEN
-                                            <%= %>
-                                        </td>
-                                        <td>OPEN
-                                            <%= %>
+                                        <td>
+                                            <%= defList.rows[i].owner_names%>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-success" name="addplayerId" value="<%= defList.rows[i].player_id%>">
+                                            <%
+                                            if (defList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                            <button type="submit" class="btn btn-xs btn-success" name="addPlayerId" value="<%= defList.rows[i].player_id%>">
                                                 Draft
                                             </button>
+                                            <%}
+                                            %>
                                         </td>
                                     </tr>
                                     <%
