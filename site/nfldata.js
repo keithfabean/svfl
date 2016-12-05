@@ -169,7 +169,7 @@ exports.getPlayersForDraft = function(request, response) {
         qry = qry + 'LEFT OUTER JOIN ff_owner_roster r ON t.team_id = r.player_id ';
         qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
         qry = qry + 'WHERE t.team_id != \'UNK\' ';
-        qry = qry + 'GROUP BY player_id, gsis_name, full_name, position, category, team, status, t.team_id ';
+        qry = qry + 'GROUP BY player_id, gsis_name, full_name, position, category, team, status, t.city ';
         qry = qry + 'ORDER BY t.team_id';
 
         // console.log('*** nfldata.getPlayersForDraft - *** Execute defense query ');
