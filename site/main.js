@@ -166,8 +166,8 @@ exports.getOwnedPlayerList = function(req, res){
                 qry = qry + '\'Active\' AS status, ';
                 qry = qry + '\'DEF\' as category ';
                 qry = qry + 'FROM ff_owner_roster r ';
-                qry = qry + 'LEFT OUTER JOIN ff_owners o ON r.owner_id = o.id ';
-                qry = qry + 'LEFT OUTER JOIN team t ON r.player_id = t.team_id ';
+                qry = qry + 'INNER JOIN ff_owners o ON r.owner_id = o.id ';
+                qry = qry + 'INNER JOIN team t ON r.player_id = t.team_id ';
                 qry = qry + 'INNER JOIN meta m ON r.season_year = m.season_year ';
                 qry = qry + 'GROUP BY r.player_id, full_name, team, position, status, category, t.city, t.name '
                 qry = qry + 'ORDER BY 3'
