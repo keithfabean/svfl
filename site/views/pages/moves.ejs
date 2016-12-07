@@ -192,7 +192,7 @@
                                                   </td>
                                                   <td>
                                                       <%
-                                                      if (qbList.rows[i].nbr_of_owners < 2 && roster.rows.length < 12) {%>
+                                                      if (qbList.rows[i].nbr_of_owners < 2) {%>
                                                           <button type="button" class="btn btn-xs btn-success" onclick="createRow(this, 'tba-');" name="addplayerId" value="<%= qbList.rows[i].player_id%>">
                                                               Add
                                                           </button>
